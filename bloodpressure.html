@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>BP Control | Blood Pressure Monitoring</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f5fff8;
+    color:#1f2937
+}
+
+header{
+    background:green;
+    color:white;
+    padding:22px
+}
+
+.header-content{
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px
+}
+
+.logo-icon{font-size:30px}
+
+.logo h1{
+    margin:0;
+    font-size:28px
+}
+
+.logo p{
+    margin:4px 0 0;
+    opacity:.9
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:25px
+}
+
+.card,.stat{
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,.06)
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:9px;
+    font-size:15px
+}
+
+input:focus{
+    outline:none;
+    border-color:green
+}
+
+button{
+    border:0;
+    cursor:pointer;
+    padding:12px 18px;
+    border-radius:9px;
+    font-weight:bold
+}
+
+.primary-btn{
+    width:100%;
+    margin-top:20px;
+    background:green;
+    color:white
+}
+
+.primary-btn:hover{background:darkgreen}
+
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px
+}
+
+.stat-title{
+    color:#666;
+    font-size:14px
+}
+
+.stat-value{
+    font-size:24px;
+    font-weight:bold;
+    margin-top:8px
+}
+
+.status{
+    padding:15px;
+    border-radius:10px;
+    font-size:17px;
+    font-weight:bold
+}
+
+.normal{
+    background:#dcfce7;
+    color:#166534
+}
+
+.low{
+    background:#fff7ed;
+    color:#9a3412
+}
+
+.high{
+    background:#fee2e2;
+    color:#b91c1c
+}
+
+.analysis-box,.food-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px
+}
+
+.metric{
+    background:#f0fdf4;
+    border-radius:10px;
+    padding:18px
+}
+
+.metric strong{
+    display:block;
+    font-size:21px;
+    margin-top:6px
+}
+
+.table-container{overflow-x:auto}
+
+table{
+    width:100%;
+    border-collapse:collapse
+}
+
+th{
+    background:#dcfce7;
+    color:#166534
+}
+
+th,td{
+    padding:12px;
+    border-bottom:1px solid #ddd;
+    text-align:center
+}
+
+.delete-btn{
+    background:#fee2e2;
+    color:#b91c1c;
+    padding:7px 12px;
+    font-size:12px
+}
+
+.food-card{
+    padding:20px;
+    border-radius:15px
+}
+
+.low-food{
+    background:#fff7ed;
+    border:1px solid #fed7aa
+}
+
+.high-food{
+    background:#ecfdf5;
+    border:1px solid #a7f3d0
+}
+
+.food-card li{margin:9px 0}
+
+.notice{
+    background:#f0fdf4;
+    border-left:5px solid green;
+    padding:15px;
+    border-radius:8px;
+    font-size:14px;
+    line-height:1.6
+}
+
+@media(max-width:800px){
+    .header-content{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px
+    }
+
+    .dashboard{
+        grid-template-columns:1fr 1fr
+    }
+
+    .form-grid,
+    .food-grid,
+    .analysis-box{
+        grid-template-columns:1fr
+    }
+}
+
+@media(max-width:500px){
+    .dashboard{grid-template-columns:1fr}
+    .container{padding:15px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="header-content">
+    <div class="logo">
+        <div class="logo-icon">❤️</div>
+        <div>
+            <h1>BP Control</h1>
+            <p>Track Your Blood Pressure & Get Food Guidance</p>
+        </div>
+    </div>
+</div>
+</header>
+
+<div class="container">
+<div class="card">
+<h2>👤 Patient Details</h2>
+
+<div class="form-grid">
+
+<div>
+<label>Age</label>
+<input type="number" id="age" min="1" max="120" placeholder="Example: 65">
+</div>
+
+<div>
+<label>BP Check Date</label>
+<input type="date" id="date">
+</div>
+
+<div>
+<label>Systolic BP</label>
+<input type="number" id="sys" min="50" max="250" placeholder="Example: 120">
+</div>
+
+<div>
+<label>Diastolic BP</label>
+<input type="number" id="dia" min="30" max="150" placeholder="Example: 80">
+</div>
+
+</div>
+
+<button class="primary-btn" onclick="addReading()">
+➕ Add BP Reading
+</button>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard">
+
+<div class="stat">
+<div class="stat-title">Patient Age</div>
+<div class="stat-value" id="showAge">-</div>
+</div>
+
+<div class="stat">
+<div class="stat-title">Total Readings</div>
+<div class="stat-value" id="count">0</div>
+</div>
+
+<div class="stat">
+<div class="stat-title">Average BP</div>
+<div class="stat-value" id="avg">-</div>
+</div>
+
+<div class="stat">
+<div class="stat-title">Latest BP</div>
+<div class="stat-value" id="latest">-</div>
+</div>
+
+</div>
+
+<!-- ANALYSIS -->
+<div class="card">
+<h2>📊 BP Analysis</h2>
+
+<div id="status" class="status normal">
+No BP data available
+</div>
+
+<br>
+
+<div class="analysis-box">
+
+<div class="metric">
+Systolic Average
+<strong id="avgSys">-</strong>
+</div>
+
+<div class="metric">
+Diastolic Average
+<strong id="avgDia">-</strong>
+</div>
+
+</div>
+</div>
+
+<!-- HISTORY -->
+<div class="card">
+<h2>📅 BP History</h2>
+
+<div class="table-container">
+<table>
+
+<thead>
+<tr>
+<th>Date</th>
+<th>Systolic</th>
+<th>Diastolic</th>
+<th>BP</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="history"></tbody>
+
+</table>
+</div>
+</div>
+
+<!-- FOOD -->
+<div class="card">
+<h2>🥗 Food Guidance</h2>
+
+<p>Food suggestions are separated according to the BP category.</p>
+
+<div class="food-grid">
+
+<div class="food-card low-food">
+<h2>🟠 Foods for LOW BP</h2>
+<ul>
+<li>Banana</li>
+<li>Milk and yogurt</li>
+<li>Dates and raisins</li>
+<li>Eggs</li>
+<li>Chicken</li>
+<li>Soups and fluids</li>
+</ul>
+</div>
+
+<div class="food-card high-food">
+<h2>🟢 Foods for HIGH BP</h2>
+<ul>
+<li>Leafy green vegetables</li>
+<li>Oats</li>
+<li>Orange and other fruits</li>
+<li>Unsalted nuts</li>
+<li>Beans and lentils</li>
+<li>Low-sodium meals</li>
+</ul>
+</div>
+
+</div>
+</div>
+
+<!-- NOTICE -->
+<div class="notice">
+<strong>⚠️ Important:</strong>
+This website is intended for BP tracking and educational food guidance.
+It does not measure blood pressure by itself and should not replace a
+validated blood-pressure monitor or professional medical advice.
+</div>
+
+</div>
+
+<script>
+
+let data=[];
+
+function addReading(){
+
+let age=document.getElementById("age").value;
+let date=document.getElementById("date").value;
+let s=parseInt(document.getElementById("sys").value);
+let d=parseInt(document.getElementById("dia").value);
+
+if(!age||!date||!s||!d){
+alert("Please fill all fields.");
+return;
+}
+
+if(age<1||age>120){
+alert("Please enter a valid age.");
+return;
+}
+
+if(s<50||s>250){
+alert("Please enter a valid systolic BP.");
+return;
+}
+
+if(d<30||d>150){
+alert("Please enter a valid diastolic BP.");
+return;
+}
+
+data.push({age,date,s,d});
+updateDashboard();
+
+document.getElementById("date").value="";
+document.getElementById("sys").value="";
+document.getElementById("dia").value="";
+}
+
+function updateDashboard(){
+
+if(data.length===0)return;
+
+let totalS=0,totalD=0,rows="";
+
+data.forEach((r,index)=>{
+
+totalS+=r.s;
+totalD+=r.d;
+
+rows+=`
+<tr>
+<td>${r.date}</td>
+<td>${r.s}</td>
+<td>${r.d}</td>
+<td><strong>${r.s}/${r.d}</strong></td>
+<td>
+<button class="delete-btn"
+onclick="deleteReading(${index})">
+Delete
+</button>
+</td>
+</tr>`;
+});
+
+let avgS=Math.round(totalS/data.length);
+let avgD=Math.round(totalD/data.length);
+
+document.getElementById("showAge").innerHTML=
+data[data.length-1].age+" years";
+
+document.getElementById("count").innerHTML=data.length;
+
+document.getElementById("avg").innerHTML=
+avgS+"/"+avgD;
+
+document.getElementById("avgSys").innerHTML=
+avgS+" mmHg";
+
+document.getElementById("avgDia").innerHTML=
+avgD+" mmHg";
+
+document.getElementById("latest").innerHTML=
+data[data.length-1].s+"/"+data[data.length-1].d;
+
+document.getElementById("history").innerHTML=rows;
+
+updateStatus(avgS,avgD);
+}
+
+function updateStatus(s,d){
+
+let status=document.getElementById("status");
+document.querySelector(".low-food").style.display="none";
+document.querySelector(".high-food").style.display="none";
+
+if(s<120||d<80){
+    status.className="status low";
+    status.innerHTML="🟠 LOW BP";
+     document.querySelector(".low-food").style.display="block";
+}
+
+else if(s>120||d>80){
+    status.className="status high";
+    status.innerHTML="🔴 BP IS HIGH";
+    document.querySelector(".high-food").style.display="block";
+}
+
+else{
+    status.className="status normal";
+    status.innerHTML="🟢 NORMAL BP";
+}
+}
+
+function deleteReading(index){
+
+data.splice(index,1);
+
+if(data.length===0){
+location.reload();
+}else{
+updateDashboard();
+}
+
+}
+
+</script>
+
+</body>
+</html>

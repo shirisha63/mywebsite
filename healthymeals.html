@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthy Bite - Healthy Meals</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+body{
+    background:#f8fff8;
+}
+
+.healthy-meals-page{
+    min-height:100vh;
+    padding:80px 8%;
+    background:linear-gradient(135deg,#ffffff,#f1fff1);
+}
+
+.container{
+    max-width:1300px;
+    margin:auto;
+}
+.heading{
+    text-align:center;
+    margin-bottom:60px;
+}
+.heading h1{
+    font-size:3.5rem;
+    color:#1b5e20;
+    margin-bottom:15px;
+    font-weight:700;
+}
+.heading p{
+    color:#666;
+    font-size:1.1rem;
+    max-width:750px;
+    margin:auto;
+    line-height:1.8;
+}
+.meal-grid{
+    display:grid;
+  grid-template-columns: repeat(4, 1fr);
+    gap:30px;
+}
+.meal-card{
+    background:#fff;
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    transition:all 0.4s ease;
+    border:1px solid #e8f5e9;
+}
+.meal-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 45px rgba(46,125,50,0.18);
+}
+.meal-card img{
+    width:100%;
+    height:240px;
+    object-fit:cover;
+}
+.meal-content{
+    padding:25px;
+}
+.meal-content h3{
+    color:#2e7d32;
+    margin-bottom:10px;
+    font-size:1.4rem;
+}
+.meal-content p{
+    color:#666;
+    margin-bottom:20px;
+    line-height:1.6;
+}
+.nutrition-box{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+.nutrition{
+    background:#f1fff1;
+    padding:12px;
+    border-radius:12px;
+    text-align:center;
+    border:1px solid #d7f0d7;
+}
+.nutrition h4{
+    color:#2e7d32;
+    font-size:14px;
+    margin-bottom:5px;
+}
+.nutrition span{
+    color:#1b5e20;
+    font-weight:600;
+}
+@media(max-width:768px){
+
+    .healthy-meals-page{
+        padding:60px 5%;
+    }
+    .heading h1{
+        font-size:2.5rem;
+    }
+    .heading p{
+        font-size:1rem;
+    }
+}
+.meal-wrapper{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+/* ===========================
+   CHATBOT CSS
+=========================== */
+
+/*==========================
+HEALTHY BITE CHATBOT
+==========================*/
+
+.chatbot-section{
+    display:flex;
+    gap:40px;
+    margin-top:80px;
+    align-items:flex-start;
+}
+
+.user-details{
+    width:40%;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.user-details h2{
+    color:#2e7d32;
+    margin-bottom:25px;
+    text-align:center;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+    color:#1b5e20;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:12px;
+    border:1px solid #c8e6c9;
+    border-radius:10px;
+    outline:none;
+    font-size:15px;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:#2e7d32;
+}
+
+.food-list{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin:20px 0;
+}
+
+.food-list label{
+    background:#f1fff1;
+    padding:10px;
+    border-radius:10px;
+    cursor:pointer;
+    border:1px solid #d7f0d7;
+}
+
+.food-list input{
+    margin-right:8px;
+}
+
+.user-details button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#2e7d32;
+    color:white;
+    font-size:17px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.user-details button:hover{
+    background:#1b5e20;
+}
+
+/*================ CHATBOT =================*/
+
+.chatbot{
+    width:60%;
+    background:#fff;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    overflow:hidden;
+}
+
+.chat-header{
+    background:#2e7d32;
+    color:#fff;
+    padding:18px;
+    font-size:20px;
+    font-weight:600;
+}
+
+.chat-box{
+    height:500px;
+    overflow-y:auto;
+    padding:20px;
+    background:#f8fff8;
+}
+
+.bot{
+    background:#e8f5e9;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:15px;
+    width:80%;
+    line-height:1.7;
+}
+
+.user{
+    background:#2e7d32;
+    color:white;
+    padding:15px;
+    border-radius:12px;
+    margin-left:auto;
+    margin-bottom:15px;
+    width:80%;
+    line-height:1.7;
+}
+
+.chat-input{
+    display:flex;
+    border-top:1px solid #ddd;
+}
+
+.chat-input input{
+    flex:1;
+    padding:15px;
+    border:none;
+    outline:none;
+    font-size:16px;
+}
+
+.chat-input button{
+    width:120px;
+    border:none;
+    background:#2e7d32;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.chat-input button:hover{
+    background:#1b5e20;
+}
+
+/*================ MOBILE =================*/
+
+@media(max-width:900px){
+
+.chatbot-section{
+    flex-direction:column;
+}
+
+.user-details,
+.chatbot{
+    width:100%;
+}
+
+.chat-box{
+    height:400px;
+}
+
+.food-list{
+    grid-template-columns:1fr;
+}
+
+}
+</style>
+</head>
+<body>
+<section class="healthy-meals-page">
+    <div class="container">
+        <div class="heading">
+            <h1>Healthy Meals</h1>
+            <p>
+                Explore fresh organic meals packed with essential nutrients,
+                balanced calories, and high-quality protein to support your
+                healthy lifestyle.
+            </p>
+        </div>
+        <div class="meal-grid">
+            <div class="meal-wrapper">
+                  <div class="meal-card">
+                <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=800" alt="Grilled Chicken Salad">
+
+                <div class="meal-content">
+                    <h3>Grilled Chicken Salad</h3>
+                    <p>Fresh vegetables, grilled chicken breast, olive oil dressing and healthy greens.</p>
+</div>
+</div>
+
+                    <div class="nutrition-box">
+                        <div class="nutrition">
+                            <h4>Serving</h4>
+                            <span>1 Person</span>
+                        </div>
+
+                        <div class="nutrition">
+                            <h4>Calories</h4>
+                            <span>420 kcal</span>
+                        </div>
+
+                        <div class="nutrition">
+                            <h4>Protein</h4>
+                            <span>35 g</span>
+                        </div>
+
+                        <div class="nutrition">
+                            <h4>Nutrients</h4>
+                            <span>Iron, Fiber</span>
+                        </div>
+                    </div>
+                </div>
+          
+            <div class="meal-wrapper">
+
+            <div class="meal-card">
+                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800" alt="Quinoa Bowl">
+
+                <div class="meal-content">
+                    <h3>🥑 Quinoa Power Bowl</h3>
+                    <p>Protein-rich quinoa, avocado, chickpeas and colorful vegetables.</p>
+</div>
+</div>
+                    <div class="nutrition-box">
+                        <div class="nutrition">
+                            <h4>Serving</h4>
+                            <span>1 Person</span>
+                        </div>
+
+                        <div class="nutrition">
+                            <h4>Calories</h4>
+                            <span>380 kcal</span>
+                        </div>
+
+                        <div class="nutrition">
+                            <h4>Protein</h4>
+                            <span>22 g</span>
+                        </div>
+
+                        <div class="nutrition">
+                            <h4>Nutrients</h4>
+                            <span>Fiber, Zinc</span>
+                        </div>
+                    </div>
+                </div>
+    
+            <div class="meal-wrapper">
+                      <div class="meal-card">
+  <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800" alt="Breakfast Bowl">
+
+                <div class="meal-content">
+                    <h3> Healthy Breakfast Bowl</h3>
+                    <p>Oats, fresh berries, nuts and Greek yogurt for a nutritious start.</p>
+                 </div>
+                
+            </div>
+                  
+                    <div class="nutrition-box">
+                        <div class="nutrition">
+                            <h4>Serving</h4>
+                            <span>1 Person</span>
+                        </div>
+
+                        <div class="nutrition">
+                            <h4>Calories</h4>
+                            <span>320 kcal</span>
+                        </div>
+
+                        <div class="nutrition">
+                            <h4>Protein</h4>
+                            <span>18 g</span>
+                        </div>
+                        <div class="nutrition">
+                            <h4>Nutrients</h4>
+                            <span>Calcium, Fiber</span>
+                        </div>
+                    </div>
+               </div>
+         
+        
+            <div class="meal-wrapper">
+                   <div class="meal-card">
+             <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=800" alt="Salmon Meal">
+                <div class="meal-content">
+                    <h3>Salmon & Vegetables</h3>
+                    <p>Omega-3 rich salmon served with steamed vegetables and herbs.</p>
+                   </div>
+                   
+            </div>
+                    <div class="nutrition-box">
+                        <div class="nutrition">
+                            <h4>Serving</h4>
+                            <span>1 Person</span>
+                        </div>
+
+                        <div class="nutrition">
+                            <h4>Calories</h4>
+                            <span>450 kcal</span>
+                        </div>
+                        <div class="nutrition">
+                            <h4>Protein</h4>
+                            <span>40 g</span>
+                        </div>
+
+                        <div class="nutrition">
+                            <h4>Nutrients</h4>
+                            <span>Omega-3, Iron</span>
+                        </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+        </div>
+    </div>
+
+    <!-- Chatbot Starts Here -->
+<!-- ================= HEALTHY BITE CHATBOT ================= -->
+
+<section class="chatbot-section">
+
+    <div class="user-details">
+
+        <h2>🥗 Healthy Bite Meal Planner</h2>
+
+        <div class="form-group">
+            <label>Age</label>
+            <input type="number" id="age" placeholder="Enter Age">
+        </div>
+
+        <div class="form-group">
+            <label>Gender</label>
+            <select id="gender">
+                <option>Male</option>
+                <option>Female</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Height (cm)</label>
+            <input type="number" id="height" placeholder="170">
+        </div>
+
+        <div class="form-group">
+            <label>Weight (kg)</label>
+            <input type="number" id="weight" placeholder="65">
+        </div>
+
+        <div class="form-group">
+            <label>What do you do?</label>
+
+            <select id="role">
+                <option>Student</option>
+                <option>Office Employee</option>
+                <option>Housewife</option>
+                <option>Manual Worker</option>
+                <option>Self Employed</option>
+                <option>Retired</option>
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Activity Level</label>
+
+            <select id="activity">
+                <option>Low</option>
+                <option>Moderate</option>
+                <option>High</option>
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Food Preference</label>
+
+            <select id="foodType">
+                <option>Vegetarian</option>
+                <option>Non-Vegetarian</option>
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Meal</label>
+
+            <select id="meal">
+
+                <option>Breakfast</option>
+
+                <option>Lunch</option>
+
+                <option>Dinner</option>
+
+            </select>
+
+        </div>
+
+        <h3>Foods Available</h3>
+
+        <div class="food-list">
+
+<label><input type="checkbox" value="Rice"> Rice</label>
+
+<label><input type="checkbox" value="Chapati"> Chapati</label>
+
+<label><input type="checkbox" value="Dal"> Dal</label>
+
+<label><input type="checkbox" value="Vegetables"> Vegetables</label>
+
+<label><input type="checkbox" value="Curd"> Curd</label>
+
+<label><input type="checkbox" value="Milk"> Milk</label>
+
+<label><input type="checkbox" value="Sprouts"> Sprouts</label>
+
+<label><input type="checkbox" value="Oats"> Oats</label>
+
+<label><input type="checkbox" value="Peanuts"> Peanuts</label>
+
+<label><input type="checkbox" value="Fruits"> Fruits</label>
+
+<label><input type="checkbox" value="Eggs"> Eggs</label>
+
+<label><input type="checkbox" value="Chicken"> Chicken</label>
+
+<label><input type="checkbox" value="Fish"> Fish</label>
+
+<label><input type="checkbox" value="Mutton"> Mutton</label>
+
+        </div>
+
+<button onclick="generateMeal()">
+
+🍽️ Generate My Healthy Meal
+
+</button>
+
+    </div>
+
+<div class="chatbot">
+
+<div class="chat-header">
+
+🤖 Healthy Bite Assistant
+
+</div>
+
+<div id="chatBox" class="chat-box">
+
+<div class="bot">
+
+Hello 👋
+
+Fill your details and click
+
+<b>Generate My Healthy Meal</b>
+
+I'll recommend a healthy meal based on your information.
+
+</div>
+
+</div>
+
+<div class="chat-input">
+
+<input
+type="text"
+id="userInput"
+placeholder="Ask something...">
+
+<button onclick="sendMessage()">
+
+Send
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+    <!-- Chatbot Ends Here -->
+
+</section>
+
+<script>
+function sendMessage() {
+
+    const input = document.getElementById("userInput");
+    const chatBox = document.getElementById("chatBox");
+
+    const userText = input.value.trim();
+
+    if (userText === "") return;
+
+    // Show user message
+    const userMessage = document.createElement("div");
+    userMessage.className = "user-message";
+    userMessage.innerHTML = userText;
+    chatBox.appendChild(userMessage);
+
+    let reply = "";
+
+    const text = userText.toLowerCase();
+
+    if (text.includes("hello") || text.includes("hi")) {
+        reply = "👋 Hello! Welcome to Healthy Bite.";
+    }
+    else if (text.includes("meal")) {
+        reply = "🥗 We have Grilled Chicken Salad, Quinoa Power Bowl, Healthy Breakfast Bowl and Salmon & Vegetables.";
+    }
+    else if (text.includes("chicken")) {
+        reply = "🍗 Grilled Chicken Salad contains 420 kcal and 35g protein.";
+    }
+    else if (text.includes("quinoa")) {
+        reply = "🥑 Quinoa Power Bowl contains 380 kcal and 22g protein.";
+    }
+    else if (text.includes("breakfast")) {
+        reply = "🥣 Healthy Breakfast Bowl contains 320 kcal and 18g protein.";
+    }
+    else if (text.includes("salmon")) {
+        reply = "🐟 Salmon & Vegetables contains 450 kcal and 40g protein.";
+    }
+    else if (text.includes("protein")) {
+        reply = "💪 Highest protein meal is Salmon & Vegetables (40g), followed by Grilled Chicken Salad (35g).";
+    }
+    else if (text.includes("calories") || text.includes("calorie")) {
+        reply = "🔥 Meal calories range from 320 kcal to 450 kcal.";
+    }
+    else if (text.includes("healthy")) {
+        reply = "🥦 All our meals are rich in protein, fiber, vitamins and minerals.";
+    }
+    else if (text.includes("bye")) {
+        reply = "😊 Thank you for visiting Healthy Bite. Have a healthy day!";
+    }
+    else {
+        reply = "❓ Sorry, I didn't understand. Ask me about meals, calories, protein or nutrition.";
+    }
+
+    // Show bot reply
+    setTimeout(function () {
+
+        const botMessage = document.createElement("div");
+        botMessage.className = "bot-message";
+        botMessage.innerHTML = reply;
+
+        chatBox.appendChild(botMessage);
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+    }, 500);
+
+    input.value = "";
+}
+// =======================
+// HEALTHY BITE CHATBOT
+// =======================
+
+const chatBox = document.getElementById("chatBox");
+
+function addBotMessage(message) {
+    chatBox.innerHTML += `
+        <div class="bot">
+            ${message}
+        </div>
+    `;
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function addUserMessage(message) {
+    chatBox.innerHTML += `
+        <div class="user">
+            ${message}
+        </div>
+    `;
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function generateMeal() {
+
+    let age = document.getElementById("age").value;
+    let gender = document.getElementById("gender").value;
+    let height = document.getElementById("height").value;
+    let weight = document.getElementById("weight").value;
+    let role = document.getElementById("role").value;
+    let activity = document.getElementById("activity").value;
+    let foodType = document.getElementById("foodType").value;
+    let meal = document.getElementById("meal").value;
+
+    let foods = [];
+
+    document.querySelectorAll(".food-list input:checked").forEach(food=>{
+        foods.push(food.value);
+    });
+
+    if(age=="" || height=="" || weight==""){
+        alert("Please fill all details");
+        return;
+    }
+
+    let recommendation = "";
+    let calories = 0;
+    let protein = 0;
+    let carbs = 0;
+    let fat = 0;
+    let fiber = 0;
+
+    // =========================
+    // BREAKFAST
+    // =========================
+
+    if(meal=="Breakfast"){
+
+        if(foods.includes("Sprouts")){
+            recommendation+="🌱 Sprouts - 1 Bowl<br>";
+            calories+=120;
+            protein+=9;
+            carbs+=18;
+            fat+=1;
+            fiber+=5;
+        }
+
+        if(foods.includes("Oats")){
+            recommendation+="🥣 Oats - 1 Bowl<br>";
+            calories+=150;
+            protein+=6;
+            carbs+=27;
+            fat+=3;
+            fiber+=4;
+        }
+
+        if(foods.includes("Milk")){
+            recommendation+="🥛 Milk - 1 Glass<br>";
+            calories+=150;
+            protein+=8;
+            carbs+=12;
+            fat+=8;
+        }
+
+        if(foods.includes("Eggs") && foodType=="Non-Vegetarian"){
+            recommendation+="🥚 2 Boiled Eggs<br>";
+            calories+=140;
+            protein+=12;
+            fat+=10;
+        }
+
+        if(foods.includes("Peanuts")){
+            recommendation+="🥜 Roasted Peanuts - 30g<br>";
+            calories+=170;
+            protein+=7;
+            fat+=14;
+            fiber+=2;
+        }
+
+        if(foods.includes("Fruits")){
+            recommendation+="🍌 Banana / Seasonal Fruit<br>";
+            calories+=90;
+            carbs+=23;
+            fiber+=3;
+        }
+
+    }
+
+    // =========================
+    // LUNCH
+    // =========================
+
+    if(meal=="Lunch"){
+
+        if(foods.includes("Rice")){
+            recommendation+="🍚 Rice - 1.5 Cups<br>";
+            calories+=300;
+            protein+=6;
+            carbs+=68;
+        }
+
+        if(foods.includes("Chapati")){
+            recommendation+="🫓 2 Chapatis<br>";
+            calories+=200;
+            protein+=6;
+            carbs+=36;
+        }
+
+        if(foods.includes("Dal")){
+            recommendation+="🥣 Dal - 1 Cup<br>";
+            calories+=180;
+            protein+=12;
+            carbs+=28;
+            fiber+=8;
+        }
+
+        if(foods.includes("Vegetables")){
+            recommendation+="🥗 Mixed Vegetables - 1 Cup<br>";
+            calories+=60;
+            fiber+=5;
+        }
+
+        if(foods.includes("Curd")){
+            recommendation+="🥛 Curd - 1 Bowl<br>";
+            calories+=100;
+            protein+=6;
+        }
+
+        if(foods.includes("Chicken")){
+            recommendation+="🍗 Chicken - 100g<br>";
+            calories+=200;
+            protein+=30;
+            fat+=5;
+        }
+
+        if(foods.includes("Fish")){
+            recommendation+="🐟 Fish - 100g<br>";
+            calories+=180;
+            protein+=25;
+            fat+=6;
+        }
+
+        if(foods.includes("Mutton")){
+            recommendation+="🥩 Mutton - 100g<br>";
+            calories+=250;
+            protein+=24;
+            fat+=18;
+        }
+
+    }
+
+    // =========================
+    // DINNER
+    // =========================
+
+    if(meal=="Dinner"){
+
+        if(foods.includes("Chapati")){
+            recommendation+="🫓 2 Chapatis<br>";
+            calories+=200;
+            protein+=6;
+            carbs+=36;
+        }
+
+        if(foods.includes("Dal")){
+            recommendation+="🥣 Dal - 1 Cup<br>";
+            calories+=180;
+            protein+=12;
+            carbs+=28;
+        }
+
+        if(foods.includes("Vegetables")){
+            recommendation+="🥗 Vegetables - 1 Cup<br>";
+            calories+=60;
+            fiber+=5;
+        }
+
+        if(foods.includes("Eggs") && foodType=="Non-Vegetarian"){
+            recommendation+="🥚 2 Eggs<br>";
+            calories+=140;
+            protein+=12;
+        }
+
+    }
+
+    addBotMessage(`
+    👋 Hello ${role}<br><br>
+
+    Based on your details,
+
+    <br><br>
+
+    <b>${meal} Recommendation</b>
+
+    <br><br>
+
+    ${recommendation}
+
+    <hr>
+
+    🔥 Calories : <b>${calories} kcal</b><br>
+
+    💪 Protein : <b>${protein} g</b><br>
+
+    🍚 Carbohydrates : <b>${carbs} g</b><br>
+
+    🥜 Fat : <b>${fat} g</b><br>
+
+    🌾 Fiber : <b>${fiber} g</b><br><br>
+
+    💧 Drink 2-3 glasses of water.<br><br>
+
+    ✅ Eat slowly and include vegetables in every meal.
+    `);
+
+}
+
+// ======================================
+// CHATBOT QUESTIONS
+// ======================================
+
+function sendMessage(){
+
+    let input=document.getElementById("userInput");
+
+    let message=input.value.toLowerCase().trim();
+
+    if(message=="") return;
+
+    addUserMessage(input.value);
+
+    input.value="";
+
+    if(message.includes("chapati")){
+
+        addBotMessage("✅ Yes. You can replace 1.5 cups of rice with 2 chapatis.");
+
+    }
+
+    else if(message.includes("protein")){
+
+        addBotMessage("💪 Good protein sources are Sprouts, Dal, Eggs, Chicken, Fish, Milk, Curd and Peanuts.");
+
+    }
+
+    else if(message.includes("breakfast")){
+
+        addBotMessage("🥣 Healthy breakfast: Sprouts + Milk + Banana + Peanuts.");
+
+    }
+
+    else if(message.includes("lunch")){
+
+        addBotMessage("🍚 Healthy lunch: Rice + Dal + Vegetables + Curd.");
+
+    }
+
+    else if(message.includes("dinner")){
+
+        addBotMessage("🌙 Healthy dinner: Chapati + Dal + Vegetables.");
+
+    }
+
+    else if(message.includes("water")){
+
+        addBotMessage("💧 Drink around 2 to 3 litres of water daily.");
+
+    }
+
+    else{
+
+        addBotMessage("😊 Sorry, I don't know that yet. I'll support more questions in the next version.");
+
+    }
+
+}
+</script>
+
+
+
+
+</body>
+</html>

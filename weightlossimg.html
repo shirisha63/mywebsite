@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            redirect page
+        </title>
+      <style>
+        body{
+font-family:sans-serif;
+text-align:center;
+background:linear-gradient(135deg,#e8f5e9,#c8e6c9);
+padding:20px;
+}
+
+#display,#avoid{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+}
+
+.food-card{
+background:white;
+padding:15px;
+width:350px;
+border-radius:15px;
+box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+
+.food-card img{
+width:300px;
+height:200px;
+object-fit:contain;
+}
+      </style>
+    </head>
+    <body>
+<h2 style="color:green;">✅Recommended Foods</h2>
+<div id="display"></div>
+<h2 style="color:red;">❌Not Recommended Foods</h2>
+<div id="avoid"></div>
+
+
+<script>    
+let goal = localStorage.getItem("goal");
+
+let age = parseInt(localStorage.getItem("age"));    
+let foods = []; 
+let NotRecommendedFoods=[];
+
+
+    
+        if(goal == "weightloss"){
+    
+    if(age <= 18){
+        foods = [
+            "Fruits (apple, banana)",
+            "Milk",
+            "Boiled vegetables",
+            "Home-made food",
+            "Oats"
+        ];
+                NotRecommendedFoods = ["Chocolates","Soft drinks",
+                "Fried snacks","Ice cream","Sugary cereals"];
+
+    }
+    
+    else if(age <40){
+        foods = [
+            "Brown rice",
+            "Leafy vegetables",
+            "Sprouts",
+            "Fruit mix",
+            "Whole grains",
+            "Green tea"
+        ];
+         NotRecommendedFoods = ["Fast food",
+         "Sugary drinks","Pastries","High-fat cheese","sauces","Packaged snacks"];
+    }
+    
+    else {
+        foods = [
+            "Light meals",
+            "Steamed vegetables",
+            "Soups",
+            "Oats & millets",
+            // "Low oil food",
+            "Fruits (low sugar)"
+        ];
+        NotRecommendedFoods = ["Fried foods","Sugary desserts",
+       "Creamy sauces","Fried rice & Noodles"];
+    
+    } 
+} 
+
+
+
+
+let display = document.getElementById("display");
+
+
+
+
+const foodInfo = {
+"Fruits (apple, banana)": {
+img:"https://thumbs.dreamstime.com/b/apple-bananas-7570395.jpg",
+cal:"95 kcal",
+protein:"1g",
+nutrients:"Vitamin C, Fiber"
+},
+
+"Milk": {
+img:"https://img.magnific.com/premium-vector/milk-box-glass-milk-illustration_773815-18.jpg",
+cal:"150 kcal",
+protein:"8g",
+nutrients:"Calcium, Vitamin D"
+},
+
+"Boiled vegetables": {
+img:"https://thumbs.dreamstime.com/b/plate-mix-steamed-vegetables-wooden-table-close-up-450416472.jpg",
+cal:"50 kcal",
+protein:"2g",
+nutrients:"Fiber, Vitamins"
+},
+
+"Home-made food": {
+img:"https://as2.ftcdn.net/jpg/17/53/82/53/1000_F_1753825383_bA3FoZFwSZx2XEnWlnItmcYwOrg4ImwH.jpg",
+cal:"200 kcal",
+protein:"10g",
+nutrients:"Balanced Nutrition"
+},
+
+"Oats": {
+img:"https://www.healthyfood.com/wp-content/uploads/2020/07/why-oats-are-so-good-for-you-iStock-1135037027.jpg",
+cal:"150 kcal",
+protein:"5g",
+nutrients:"Fiber, Iron"
+},
+
+"Brown rice": {
+img:"https://www.roopmahalrice.com/wp-content/uploads/2023/06/Everything-About-Brown-Rice-by-Roop-mahal-Rice-Brown-Rice-Nutrition-value-and-More.jpg",
+cal:"216 kcal",
+protein:"5g",
+nutrients:"Fiber, Magnesium"
+},
+
+"Leafy vegetables": {
+img:"https://media.istockphoto.com/id/1318478175/photo/vegan-raw-vegetables-on-green-wooden-table-background.jpg?s=612x612&w=0&k=20&c=TLk6JMXP1u8Nu9pAvq1LtJ0ae5bCYDIqzK-mPUP-tcc=",
+cal:"30 kcal",
+protein:"3g",
+nutrients:"Iron, Folate"
+},
+
+"Sprouts": {
+img:"https://www.indianhealthyrecipes.com/wp-content/uploads/2022/04/mung-bean-sprouts-recipe.jpg",
+cal:"100 kcal",
+protein:"7g",
+nutrients:"Protein, Fiber"
+},
+
+"Fruit mix": {
+img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBgU7Nu8wDQYYqNJ1P8gUs6oVb_1mhZ0L4Yo3MspSHm9gs0xgiX2zr-Cum&s=10",
+cal:"120 kcal",
+protein:"2g",
+nutrients:"Vitamin C"
+},
+
+"Whole grains": {
+img:"https://img.magnific.com/free-psd/colorful-assortment-grains-seeds_191095-86075.jpg?semt=ais_hybrid&w=740&q=80",
+cal:"180 kcal",
+protein:"6g",
+nutrients:"Fiber, B Vitamins"
+},
+
+"Green tea": {
+img:"https://i.pinimg.com/736x/fb/71/6b/fb716bafc7948138d5182a11b6319c5c.jpg",
+cal:"2 kcal",
+protein:"0g",
+nutrients:"Antioxidants"
+},
+"Light meals":{
+    img:"https://www.awesomecuisine.com/wp-content/uploads/2025/05/Healthy-dinner-spread-with-roasted-vegetables-leafy-salad-grilled-protein-and-a-small-portion-of-quinoa-showing-light-and-ba-500x233.jpeg",
+    cal:"350 kcal",
+    protein:"20g",
+    nutrients:"complex carbohydrates, and dietary fiber"
+},
+"Steamed vegetables":{
+    img:"https://lowcarbafrica.com/wp-content/uploads/2022/03/Instant-Pot-Steamed-Vegetables-IG-1.jpg",
+    cal:"50 kcal",
+    protein:"2g",
+    nutrients:"vitamins,minerals"
+},
+"Soups":{
+    img:"https://spoonsoul.com/wp-content/uploads/2025/12/types-of-soup_.webp",
+    cal:"80 kcal",
+    protein:"5g",
+    nutrients:"minerals"
+},
+"Oats & millets":{
+    img:"https://static.toiimg.com/thumb/msid-123919322,width-1280,height-720,resizemode-4/123919322.jpg",
+    cal:"390 and 340 kcal",
+    protein:"15g and 10g",
+    nutrients:"fiber"
+},
+"Fruits (low sugar)":{
+    img:"https://img.magnific.com/free-photo/top-view-tasty-sliced-fruits-with-fresh-berries-fruits-dark-background_140725-142081.jpg?semt=ais_hybrid&w=740&q=80",
+    cal:"30-50 kcal",
+    protein:"1g",
+    nutrients:"vitamins, minerals, and fiber"
+}
+
+};
+const notRecommendedInfo = {
+    "Chocolates":{
+        img:"https://www.oyegifts.com/cdn/shop/files/true-chocolate-desire-online-india.jpg?v=1773750663",
+    },
+
+"Soft drinks":{
+    img:"https://i.redd.it/yyr6vtruhzbb1.jpg",
+},
+"Fried snacks":{
+    img:"https://png.pngtree.com/png-vector/20251111/ourlarge/pngtree-fried-snacks-platter-assorted-variety-png-image_17889506.webp",
+},
+"Ice cream":{
+    img:"https://www.keep-calm-and-eat-ice-cream.com/wp-content/uploads/2022/08/Ice-cream-sundae-hero-10.jpg",
+},
+"Sugary cereals":{
+    img:"https://media.istockphoto.com/id/508473183/photo/coloful-fruit-cereal-loops.jpg?s=612x612&w=0&k=20&c=I9l-gNz-ZsFzK7AoYY9L0x4DrxigvI1DHiMnKW0_vkc=",
+},
+"Fast food":{
+    img:"https://thumbs.dreamstime.com/b/large-set-different-fast-food-junk-ai-generated-image-294429048.jpg",
+},
+"Sugary drinks":{
+    img:"https://trilliantdentistry.com/wp-content/uploads/2019/03/the-impact-of-sugary-drinks-on-your-teeth.jpg",
+},
+"Pastries":{
+    img:"https://static.vecteezy.com/system/resources/previews/049/544/454/large_2x/plate-of-assorted-cakes-and-pastries-being-decorated-with-powdered-sugar-photo.jpg",
+},
+"High-fat cheese":{
+    img:"https://m.economictimes.com/thumb/msid-126050053,width-1600,height-900,resizemode-4,imgsize-29946/cheese.jpg",
+},
+"sauces":{
+    img:"https://cdn.pixabay.com/photo/2024/03/27/15/58/ai-generated-8659363_1280.jpg",
+},
+"Packaged snacks":{
+    img:"https://img.magnific.com/premium-photo/variety-junk-food-generated-by-ai_985249-1699.jpg",
+},
+"Fried foods":{
+    img:"https://media.istockphoto.com/id/1018455976/photo/variety-of-beer-snack.jpg?s=612x612&w=0&k=20&c=fFNIdc654HIJMGTbwBT33wD4RUmAus_FR-GJPdQqXNw=",
+},
+"Sugary desserts":{
+    img:"https://upload.wikimedia.org/wikipedia/commons/a/ab/Desserts.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original",
+},
+"Creamy sauces":{
+    img:"https://www.lifeasastrawberry.com/wp-content/uploads/2012/11/sour-cream-chive-sauce.jpg",
+},
+"Fried rice & Noodles":{
+    img:"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_720,h_420,c_fill/5991ea84b9bad0717af88ec86cf3110b",
+}
+}
+
+foods.forEach(f => {
+
+let item = foodInfo[f];
+display.innerHTML += `
+<div class="food-card">
+<img src="${item.img}">
+<h3>${f}</h3>
+<p><b>Calories:</b> ${item.cal}</p>
+<p><b>Protein:</b> ${item.protein}</p>
+<p><b>Nutrients:</b> ${item.nutrients}</p>
+</div>
+`;
+
+
+});
+
+
+// let avoid = document.getElementById("avoid");
+
+// NotRecommendedFoods.forEach(f => {
+
+// avoid.innerHTML += `
+// <div class="food-card">
+// <img src="${item.img}" alt="${f}">
+
+// <h3>${f}</h3>
+// // <p style="color:red;"><b>Not Recommended</b></p>
+// </div>
+// `;
+// });
+    
+let avoid = document.getElementById("avoid");
+
+NotRecommendedFoods.forEach(f => {
+
+    let item = notRecommendedInfo[f];
+
+    if (item) {
+
+        avoid.innerHTML += `
+        <div class="food-card">
+
+            <img src="${item.img}" alt="${f}">
+
+            <h3>${f}</h3>
+
+          
+             </div>
+        `;
+    }
+
+});
+
+</script>
+ 
+    </body>
+</html>

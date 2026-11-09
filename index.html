@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+  <title>Healthy Bite Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+  *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+  }
+  body{
+    background:#f4f7f2;   
+  }
+  .navbar{
+    width:100%;
+    background:#6dbb2d;
+    color:white;
+    padding:20px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .logo{
+    font-size:28px;
+    font-weight:bold;
+  }
+  .nav-links a{
+    text-decoration:none;
+    color:white;
+    margin-left:25px;
+    font-size:18px;
+    transition:0.3s;
+  }
+  .nav-links a:hover{
+    color:#e7ffd0;
+  }
+  .hero{
+    height:350px;
+    background:url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1400&auto=format&fit=crop');
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    text-align:center;
+  }
+  .hero-content{
+    background:rgba(0,0,0,0.5);
+    padding:40px;
+    border-radius:20px;
+  }
+  .hero h1{
+    font-size:50px;
+    margin-bottom:15px;
+  }
+  .hero p{
+    font-size:20px;
+  }
+  .dashboard{
+    width:90%;
+    margin:40px auto;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+  }
+  .card{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    text-align:center;
+  }
+  .card i{
+    font-size:45px;
+    color:#6dbb2d;
+    margin-bottom:20px;
+  }
+  .card h2{
+    margin-bottom:15px;
+  }
+  .card p{
+    color:gray;
+    line-height:1.6;
+  }
+  button{
+    margin-top:20px;
+    padding:12px 20px;
+    border:none;
+    background:#6dbb2d;
+    color:white;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+  }
+  button:hover{
+    background:#5aa126;
+  }
+  </style>
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="logo">Healthy Bite-Smart Recommender</div>
+
+    <div class="nav-links">
+    <a href="#" id="signinBtn">Sign In</a>
+      <a href="#" id="Help Desk">help desk</a>
+      <a href="#" id="Personal Info">personal info</a>
+      
+      
+    </div>
+  </div>
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Welcome to Healthy Bite</h1>
+      <p>Eat Healthy, Feel Better Every Day</p>
+    </div>
+  </div>
+  <div class="dashboard">
+    <div class="card">
+      <i class="fas fa-apple-whole"></i>
+      <h2>Healthy Meals</h2>
+      <p>Explore fresh organic meals and balanced nutrition plans.</p>
+      <button id="healthyMealsBtn">Explore</button>
+    </div>
+    <!-- <div class="card">
+      <i class="fas fa-heart-pulse"></i>
+      <h2>Fitness Tracker</h2>
+      <p>Track calories, workouts, and your healthy lifestyle journey.</p>
+      <button>Track Now</button>
+    </div> -->
+    <div class="card">
+      <i class="fas fa-leaf"></i>
+      <h2>Organic Foods</h2>
+      <p>Choose natural and fresh ingredients for better health.</p>
+      <button>Buy now</button>
+      </div>
+      <div class="card">
+        <i class="fas fa-weight"></i>
+      <h2>Weight Loss</h2>
+      <p>Its Not A Diet,It's A Lifestyle Change</p>
+    <button id="weightLossBtn">Start Now</button>
+  </div>
+  <div class="card">
+      <i class="fas fa-stethoscope"></i>
+      <h2>Blood Pressure(BP)</h2>
+    <p>Personalized food suggestions for balanced blood pressure.</p>
+    <button id="bloodpressureBtn">Check BP & Foods</button>
+
+    </div>
+    <div class="card">
+    <i class="fas fa-syringe"></i>
+      <h2>Diabetes</h2>
+      <p>Personalized nutrition for healthier sugar levels.</p>
+      <button>Check Diabetes Care</button>
+    </div>
+    <div class="card">
+  <i class="fas fa-dumbbell"></i>
+      <h2>Gym & Muscle Growth</h2>
+      <p>Smart nutrition and workouts for maximum muscle gain.</p>
+      <button>Build Muscle</button>
+    </div>
+  </div>
+  <script>
+  document.getElementById("signinBtn").onclick = function(){
+    window.location.href = "createAccount.html";}
+    document.getElementById("Personal Info").onclick = function(){
+    window.location.href = "personalinfo.html";
+  }
+  document.getElementById("weightLossBtn").onclick=function(){
+    window.location.href="weightloss.html";
+  }
+  document.getElementById("healthyMealsBtn").onclick=function(){
+    window.location.href="healthymeals.html";
+  }
+  document.getElementById("bloodpressureBtn").onclick=function(){
+    window.location.href="bloodpressure.html";
+  }
+
+  </script>
+  </body>
+  </html>
