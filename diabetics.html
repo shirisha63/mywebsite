@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthy Bite - Smart Sugar Monitoring</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:#f5f9f2;color:#333}
+header{background:white;padding:18px 6%;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px #ddd;flex-wrap:wrap;gap:15px}
+.logo{color:#6dbb2d;font-size:25px;font-weight:700}
+nav{display:flex;gap:18px;flex-wrap:wrap}
+nav a{text-decoration:none;color:#333;font-size:14px}
+nav a:hover{color:#6dbb2d}
+button{cursor:pointer}
+.lang-btn,.secondary{background:#398c23;color:white;border:none;padding:10px 15px;border-radius:7px}
+.hero{text-align:center;padding:45px 15px}
+.hero h1{color:#398c23;font-size:32px}
+.hero p{margin-top:12px;color:#666}
+.container{max-width:1100px;margin:auto;padding:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+.card{background:white;padding:25px;border-radius:15px;box-shadow:0 4px 15px #ddd;margin-bottom:22px}
+.card h2{color:#398c23;margin-bottom:18px;font-size:21px}
+label{display:block;font-weight:500;margin-top:15px}
+input,select{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;margin-top:7px;font-size:15px}
+.primary{width:100%;background:#6dbb2d;color:white;border:none;padding:13px;margin-top:20px;border-radius:8px;font-size:16px;font-weight:600}
+.primary:hover{background:#398c23}
+.secondary{margin-top:12px}
+.result{display:none;padding:20px;margin-top:20px;border-radius:10px;line-height:1.8;overflow-wrap:anywhere}
+.green{background:#e3f8e3;border-left:6px solid green}
+.yellow{background:#fff4d6;border-left:6px solid orange}
+.red{background:#ffe3e3;border-left:6px solid red}
+.blue{background:#e5f0ff;border-left:6px solid #3976c9}
+.history-item{background:#f1f8ec;padding:14px;margin:10px 0;border-radius:8px;overflow-wrap:anywhere}
+.small-text{color:#777;font-size:13px;line-height:1.7;margin-top:12px}
+.danger{background:#e74c3c}
+footer{text-align:center;padding:25px;background:#eaf5e3;margin-top:30px}
+@media(max-width:600px){header{flex-direction:column}.hero h1{font-size:25px}.card{padding:18px}}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Healthy Bite 💚</div>
+    <nav>
+        <a href="index.html" data-i18n="home">Home</a>
+        <a href="weightloss.html" data-i18n="weight">Weight Loss</a>
+        <a href="sugar.html" data-i18n="testing">Sugar Testing</a>
+    </nav>
+    <button class="lang-btn" onclick="toggleLanguage()">తెలుగు</button>
+</header>
+
+<section class="hero">
+    <h1 data-i18n="heading">Smart Blood Sugar Monitoring 🩸</h1>
+    <p data-i18n="subtitle">Check your sugar, understand your readings and monitor your health.</p>
+</section>
+
+<div class="container">
+
+<div class="card">
+    <h2 data-i18n="analyzer">🩸 1. Smart Sugar Level Analyzer</h2>
+
+    <label data-i18n="name">Your Name</label>
+    <input type="text" id="username" placeholder="Enter your name" data-placeholder="namePlaceholder">
+
+    <label data-i18n="age">Your Age</label>
+    <input type="number" id="age" placeholder="Enter your age" data-placeholder="agePlaceholder" min="1" max="120">
+
+    <label data-i18n="when">When did you check your sugar?</label>
+    <select id="testType">
+        <option value="fasting" data-i18n="fasting">Before Eating (Fasting)</option>
+        <option value="after" data-i18n="after">2 Hours After Eating</option>
+        <option value="random" data-i18n="random">Any Time (Random)</option>
+    </select>
+
+    <label data-i18n="reading">Sugar Reading (mg/dL)</label>
+    <input type="number" id="sugar" placeholder="Example: 110" data-placeholder="sugarPlaceholder" min="1" max="1500">
+
+    <button class="primary" onclick="checkSugar()" data-i18n="check">CHECK MY SUGAR</button>
+    <button class="secondary" onclick="startVoice()" data-i18n="voiceButton">🎤 Enter Using Voice</button>
+
+    <div id="result" class="result"></div>
+</div>
+
+<div class="grid">
+    <div class="card">
+        <h2 data-i18n="previous">📊 2. My Previous Tests</h2>
+        <div id="history"></div>
+        <button class="secondary danger" onclick="clearHistory()" data-i18n="clear">Clear History</button>
+    </div>
+
+    <div class="card">
+        <h2 data-i18n="trend">📈 3. Smart Trend Detection</h2>
+        <div id="trend"></div>
+        <h3 style="margin-top:20px" data-i18n="graph">Sugar History Graph</h3>
+        <canvas id="sugarChart"></canvas>
+    </div>
+</div>
+
+<div class="card">
+    <h2 data-i18n="foodTitle">🍎 4. Food Impact Tracker</h2>
+
+    <label data-i18n="foodQuestion">What did you eat?</label>
+    <input type="text" id="food" placeholder="Example: Rice, Chapati, Fruits" data-placeholder="foodPlaceholder">
+
+    <label data-i18n="mealQuestion">Which meal?</label>
+    <select id="meal">
+        <option value="Breakfast" data-i18n="breakfast">Breakfast</option>
+        <option value="Lunch" data-i18n="lunch">Lunch</option>
+        <option value="Evening Snack" data-i18n="snack">Evening Snack</option>
+        <option value="Dinner" data-i18n="dinner">Dinner</option>
+    </select>
+
+    <button class="primary" onclick="saveFood()" data-i18n="saveFood">SAVE FOOD DETAILS</button>
+    <div id="foodHistory"></div>
+
+    <p class="small-text" data-i18n="foodNote">
+        Food records help you review your meals alongside your readings.
+        They cannot prove that a particular food caused a glucose change.
+    </p>
+</div>
+
+<div class="card">
+    <h2 data-i18n="estimate">🤖 5. Smart Trend Estimate</h2>
+    <p data-i18n="estimateInfo">This feature reviews your previous readings of the same test type.</p>
+    <button class="primary" onclick="predictTrend()" data-i18n="analyze">ANALYZE MY TREND</button>
+    <div id="prediction" class="result blue"></div>
+    <p class="small-text" data-i18n="estimateNote">
+        This is a simple mathematical trend estimate, not an AI medical prediction.
+        It cannot predict future blood sugar or diagnose disease.
+    </p>
+</div>
+
+<div class="card">
+    <h2 data-i18n="report">📄 6. Download My Sugar Report</h2>
+    <p data-i18n="reportInfo">Download your previous sugar readings and food records.</p>
+    <button class="primary" onclick="downloadPDF()" data-i18n="download">DOWNLOAD PDF REPORT</button>
+</div>
+
+<div class="card">
+    <h2 data-i18n="voiceTitle">🎤 7. Voice-Based Sugar Entry</h2>
+    <p data-i18n="voiceInfo">Click the voice button and say something like:</p>
+    <div class="tip">"My fasting sugar is 110"</div>
+    <button class="primary" onclick="startVoice()" data-i18n="startVoice">START VOICE INPUT</button>
+    <p id="voiceStatus" class="small-text"></p>
+</div>
+
+<div class="card">
+    <h2 data-i18n="important">⚠️ Important Health Information</h2>
+    <p class="small-text" data-i18n="healthNote">
+        This website provides general educational information.
+        It cannot physically measure blood sugar or diagnose diabetes.
+        Enter readings from a glucometer or medical device.
+        A single home reading cannot confirm diabetes.
+        Laboratory testing and professional medical advice are important.
+    </p>
+</div>
+
+</div>
+
+<footer>
+    <p data-i18n="footer">© 2026 Healthy Bite | Eat Healthy, Live Healthy 💚</p>
+</footer>
+
+<script>
+
+const translations = {
+en: {
+home:"Home",weight:"Weight Loss",testing:"Sugar Testing",
+heading:"Smart Blood Sugar Monitoring 🩸",
+subtitle:"Check your sugar, understand your readings and monitor your health.",
+analyzer:"🩸 1. Smart Sugar Level Analyzer",
+name:"Your Name",namePlaceholder:"Enter your name",
+age:"Your Age",agePlaceholder:"Enter your age",
+when:"When did you check your sugar?",
+fasting:"Before Eating (Fasting)",after:"2 Hours After Eating",random:"Any Time (Random)",
+reading:"Sugar Reading (mg/dL)",sugarPlaceholder:"Example: 110",
+check:"CHECK MY SUGAR",voiceButton:"🎤 Enter Using Voice",
+previous:"📊 2. My Previous Tests",clear:"Clear History",
+trend:"📈 3. Smart Trend Detection",graph:"Sugar History Graph",
+foodTitle:"🍎 4. Food Impact Tracker",foodQuestion:"What did you eat?",
+foodPlaceholder:"Example: Rice, Chapati, Fruits",
+mealQuestion:"Which meal?",breakfast:"Breakfast",lunch:"Lunch",
+snack:"Evening Snack",dinner:"Dinner",saveFood:"SAVE FOOD DETAILS",
+foodNote:"Food records help you review your meals alongside your readings. They cannot prove that a particular food caused a glucose change.",
+estimate:"🤖 5. Smart Trend Estimate",
+estimateInfo:"This feature reviews your previous readings of the same test type.",
+analyze:"ANALYZE MY TREND",
+estimateNote:"This is a simple mathematical trend estimate, not an AI medical prediction. It cannot predict future blood sugar or diagnose disease.",
+report:"📄 6. Download My Sugar Report",
+reportInfo:"Download your previous sugar readings and food records.",
+download:"DOWNLOAD PDF REPORT",
+voiceTitle:"🎤 7. Voice-Based Sugar Entry",
+voiceInfo:"Click the voice button and say something like:",
+startVoice:"START VOICE INPUT",
+important:"⚠️ Important Health Information",
+healthNote:"This website provides general educational information. It cannot physically measure blood sugar or diagnose diabetes. Enter readings from a glucometer or medical device. A single home reading cannot confirm diabetes. Laboratory testing and professional medical advice are important.",
+footer:"© 2026 Healthy Bite | Eat Healthy, Live Healthy 💚",
+noHistory:"No previous readings.",
+needTwo:"Enter at least two readings of the same test type to see a trend.",
+increasing:"📈 Your recent readings are increasing. Discuss this pattern with your healthcare professional.",
+decreasing:"📉 Your recent readings are decreasing. Continue following your healthcare plan.",
+stable:"➡ Your first and latest readings are equal.",
+validName:"Please enter a valid name and age.",
+validSugar:"Please enter a valid sugar reading.",
+validFood:"Please enter food name.",
+lowTitle:"⚠️ Low Blood Sugar",
+lowMessage:"Your reading is below 70 mg/dL. Follow your prescribed low-sugar treatment plan. Seek emergency help if you are unconscious, confused or having a seizure.",
+normalTitle:"🟢 Within the Usual Fasting Range",
+normalMessage:"This is within the usual laboratory fasting range for non-pregnant adults.",
+preTitle:"🟡 Prediabetes Range",
+preMessage:"This falls in the prediabetes range for laboratory fasting glucose. A home meter cannot diagnose prediabetes. Discuss laboratory testing with your doctor.",
+diabetesTitle:"🔴 Diabetes Range",
+diabetesMessage:"This is in the diabetes range for laboratory fasting glucose. A home meter reading cannot confirm diabetes. Consult a doctor for laboratory confirmation.",
+afterTitle:"📊 After-Meal Reading",
+afterMessage:"Ordinary home readings after meals do not use the same diagnostic thresholds as a laboratory 2-hour glucose tolerance test. Discuss your readings with your doctor.",
+randomTitle:"📊 Random Reading",
+randomMessage:"Random readings depend on when and what you ate. One home reading cannot diagnose diabetes. Discuss concerning readings with a healthcare professional.",
+veryHigh:"This is a very high reading. Seek prompt medical advice. If you have vomiting, difficulty breathing, confusion or severe weakness, seek emergency care.",
+remember:"Remember: This is an educational interpretation, not a diagnosis.",
+needThree:"Please enter at least three readings of the same test type.",
+trendLabel:"Trend",average:"Average of recorded readings",first:"First reading",latest:"Latest reading",
+notForecast:"This is a descriptive estimate from your past readings, not a forecast of future glucose levels.",
+listening:"Listening... Speak now.",voiceError:"Voice recognition failed. Please enter manually.",
+voiceUnsupported:"Voice input is not supported in this browser. Try Chrome.",
+deleteConfirm:"Are you sure you want to delete all sugar readings?",
+recognized:"Recognized"
+},
+
+te: {
+home:"హోమ్",weight:"బరువు తగ్గడం",testing:"షుగర్ పరీక్ష",
+heading:"స్మార్ట్ రక్తంలో చక్కెర పర్యవేక్షణ 🩸",
+subtitle:"మీ షుగర్ స్థాయిని పరీక్షించండి, ఫలితాలను అర్థం చేసుకోండి మరియు ఆరోగ్యాన్ని గమనించండి.",
+analyzer:"🩸 1. స్మార్ట్ షుగర్ స్థాయి విశ్లేషణ",
+name:"మీ పేరు",namePlaceholder:"మీ పేరును నమోదు చేయండి",
+age:"మీ వయస్సు",agePlaceholder:"మీ వయస్సును నమోదు చేయండి",
+when:"మీరు ఎప్పుడు షుగర్ పరీక్ష చేసుకున్నారు?",
+fasting:"ఆహారం తినే ముందు (ఫాస్టింగ్)",after:"ఆహారం తిన్న 2 గంటల తర్వాత",random:"ఏ సమయంలోనైనా (రాండమ్)",
+reading:"షుగర్ రీడింగ్ (mg/dL)",sugarPlaceholder:"ఉదా: 110",
+check:"నా షుగర్ పరీక్షించండి",voiceButton:"🎤 వాయిస్ ద్వారా నమోదు చేయండి",
+previous:"📊 2. నా గత పరీక్షలు",clear:"చరిత్రను తొలగించండి",
+trend:"📈 3. షుగర్ మార్పుల గుర్తింపు",graph:"షుగర్ చరిత్ర గ్రాఫ్",
+foodTitle:"🍎 4. ఆహార ప్రభావ ట్రాకర్",foodQuestion:"మీరు ఏమి తిన్నారు?",
+foodPlaceholder:"ఉదా: అన్నం, చపాతీ, పండ్లు",
+mealQuestion:"ఏ భోజనం?",breakfast:"ఉదయం అల్పాహారం",lunch:"మధ్యాహ్న భోజనం",
+snack:"సాయంత్రం అల్పాహారం",dinner:"రాత్రి భోజనం",saveFood:"ఆహార వివరాలను సేవ్ చేయండి",
+foodNote:"మీ షుగర్ రీడింగ్‌లతో పాటు మీ భోజన వివరాలను పరిశీలించడానికి ఆహార రికార్డులు సహాయపడతాయి. ఒక నిర్దిష్ట ఆహారం వల్ల గ్లూకోజ్ మారిందని ఇవి నిరూపించలేవు.",
+estimate:"🤖 5. షుగర్ మార్పుల అంచనా",
+estimateInfo:"ఈ ఫీచర్ ఒకే రకమైన మీ గత షుగర్ రీడింగ్‌లను పరిశీలిస్తుంది.",
+analyze:"నా షుగర్ మార్పులను విశ్లేషించండి",
+estimateNote:"ఇది సాధారణ గణిత ఆధారిత అంచనా మాత్రమే; AI వైద్య అంచనా కాదు. ఇది భవిష్యత్తు షుగర్ స్థాయిని అంచనా వేయదు లేదా వ్యాధిని నిర్ధారించదు.",
+report:"📄 6. నా షుగర్ నివేదికను డౌన్‌లోడ్ చేయండి",
+reportInfo:"మీ గత షుగర్ రీడింగ్‌లు మరియు ఆహార రికార్డులను డౌన్‌లోడ్ చేయండి.",
+download:"PDF నివేదికను డౌన్‌లోడ్ చేయండి",
+voiceTitle:"🎤 7. వాయిస్ ద్వారా షుగర్ నమోదు",
+voiceInfo:"వాయిస్ బటన్‌ను నొక్కి ఇలా చెప్పండి:",
+startVoice:"వాయిస్ నమోదు ప్రారంభించండి",
+important:"⚠️ ముఖ్యమైన ఆరోగ్య సమాచారం",
+healthNote:"ఈ వెబ్‌సైట్ సాధారణ విద్యా సమాచారాన్ని అందిస్తుంది. ఇది నిజంగా రక్తంలోని షుగర్‌ను కొలవదు లేదా డయాబెటిస్‌ను నిర్ధారించదు. గ్లూకోమీటర్ లేదా వైద్య పరికరం నుంచి వచ్చిన రీడింగ్‌లను నమోదు చేయండి. ఒక్క ఇంటి పరీక్ష రీడింగ్‌తో డయాబెటిస్‌ను నిర్ధారించలేము. ల్యాబ్ పరీక్షలు మరియు వైద్యుల సలహా చాలా ముఖ్యం.",
+footer:"© 2026 Healthy Bite | ఆరోగ్యంగా తినండి, ఆరోగ్యంగా జీవించండి 💚",
+noHistory:"గత రీడింగ్‌లు లేవు.",
+needTwo:"మార్పును చూడటానికి ఒకే రకమైన కనీసం రెండు రీడింగ్‌లను నమోదు చేయండి.",
+increasing:"📈 మీ ఇటీవలి రీడింగ్‌లు పెరుగుతున్నాయి. ఈ మార్పు గురించి వైద్య నిపుణులతో మాట్లాడండి.",
+decreasing:"📉 మీ ఇటీవలి రీడింగ్‌లు తగ్గుతున్నాయి. మీ ఆరోగ్య ప్రణాళికను కొనసాగించండి.",
+stable:"➡ మీ మొదటి మరియు తాజా రీడింగ్‌లు సమానంగా ఉన్నాయి.",
+validName:"దయచేసి సరైన పేరు మరియు వయస్సును నమోదు చేయండి.",
+validSugar:"దయచేసి సరైన షుగర్ రీడింగ్‌ను నమోదు చేయండి.",
+validFood:"దయచేసి ఆహారం పేరు నమోదు చేయండి.",
+lowTitle:"⚠️ తక్కువ రక్తంలో షుగర్",
+lowMessage:"మీ రీడింగ్ 70 mg/dL కంటే తక్కువగా ఉంది. మీ వైద్యుడు సూచించిన చికిత్సను అనుసరించండి. అపస్మారక స్థితి, గందరగోళం లేదా మూర్ఛ ఉంటే అత్యవసర వైద్య సహాయం పొందండి.",
+normalTitle:"🟢 సాధారణ ఫాస్టింగ్ పరిధిలో ఉంది",
+normalMessage:"గర్భిణులు కాని పెద్దవారిలో సాధారణ ల్యాబ్ ఫాస్టింగ్ పరిధిలో ఈ రీడింగ్ ఉంది.",
+preTitle:"🟡 ప్రీడయాబెటిస్ పరిధి",
+preMessage:"ఈ రీడింగ్ ల్యాబ్ ఫాస్టింగ్ గ్లూకోజ్ ప్రీడయాబెటిస్ పరిధిలో ఉంది. ఇంటి గ్లూకోమీటర్‌తో ప్రీడయాబెటిస్‌ను నిర్ధారించలేము. వైద్యుడిని సంప్రదించండి.",
+diabetesTitle:"🔴 డయాబెటిస్ పరిధి",
+diabetesMessage:"ఈ రీడింగ్ ల్యాబ్ ఫాస్టింగ్ గ్లూకోజ్ డయాబెటిస్ పరిధిలో ఉంది. ఇంటి రీడింగ్‌తో డయాబెటిస్‌ను నిర్ధారించలేము. వైద్యుడిని సంప్రదించండి.",
+afterTitle:"📊 భోజనం తర్వాత రీడింగ్",
+afterMessage:"భోజనం తర్వాత ఇంటి రీడింగ్‌లకు ల్యాబ్ పరీక్షలతో సమానమైన నిర్ధారణ ప్రమాణాలు ఉండవు. మీ రీడింగ్‌ల గురించి వైద్యుడితో మాట్లాడండి.",
+randomTitle:"📊 రాండమ్ రీడింగ్",
+randomMessage:"రాండమ్ రీడింగ్‌లు మీరు ఎప్పుడు, ఏమి తిన్నారనే దానిపై ఆధారపడి ఉంటాయి. ఒక్క రీడింగ్‌తో డయాబెటిస్‌ను నిర్ధారించలేము.",
+veryHigh:"ఇది చాలా ఎక్కువ రీడింగ్. వెంటనే వైద్య సలహా పొందండి. వాంతులు, శ్వాస తీసుకోవడంలో ఇబ్బంది, గందరగోళం లేదా తీవ్రమైన బలహీనత ఉంటే అత్యవసర సహాయం పొందండి.",
+remember:"గుర్తుంచుకోండి: ఇది విద్యా సమాచారం మాత్రమే, వైద్య నిర్ధారణ కాదు.",
+needThree:"దయచేసి ఒకే రకమైన కనీసం మూడు రీడింగ్‌లను నమోదు చేయండి.",
+trendLabel:"మార్పు",average:"నమోదైన రీడింగ్‌ల సగటు",first:"మొదటి రీడింగ్",latest:"తాజా రీడింగ్",
+notForecast:"ఇది గత రీడింగ్‌ల ఆధారంగా చేసిన వివరణ మాత్రమే. భవిష్యత్తు షుగర్ స్థాయిని అంచనా వేయదు.",
+listening:"వింటున్నాను... ఇప్పుడు మాట్లాడండి.",voiceError:"వాయిస్ గుర్తింపు విఫలమైంది. దయచేసి చేతితో నమోదు చేయండి.",
+voiceUnsupported:"ఈ బ్రౌజర్‌లో వాయిస్ సదుపాయం లేదు. Chrome ప్రయత్నించండి.",
+deleteConfirm:"మీరు అన్ని షుగర్ రీడింగ్‌లను తొలగించాలనుకుంటున్నారా?",
+recognized:"గుర్తించినది"
+},
+
+hi: {
+home:"होम",weight:"वज़न घटाना",testing:"शुगर जाँच",
+heading:"स्मार्ट ब्लड शुगर मॉनिटरिंग 🩸",
+subtitle:"अपना शुगर जाँचें, रीडिंग समझें और अपने स्वास्थ्य पर नज़र रखें।",
+analyzer:"🩸 1. स्मार्ट शुगर स्तर विश्लेषक",
+name:"आपका नाम",namePlaceholder:"अपना नाम दर्ज करें",
+age:"आपकी उम्र",agePlaceholder:"अपनी उम्र दर्ज करें",
+when:"आपने शुगर की जाँच कब की?",
+fasting:"खाने से पहले (फास्टिंग)",after:"खाने के 2 घंटे बाद",random:"किसी भी समय (रैंडम)",
+reading:"शुगर रीडिंग (mg/dL)",sugarPlaceholder:"उदाहरण: 110",
+check:"मेरी शुगर जाँचें",voiceButton:"🎤 आवाज़ से दर्ज करें",
+previous:"📊 2. मेरी पिछली जाँचें",clear:"इतिहास साफ़ करें",
+trend:"📈 3. शुगर बदलाव पहचानें",graph:"शुगर इतिहास ग्राफ",
+foodTitle:"🍎 4. भोजन प्रभाव ट्रैकर",foodQuestion:"आपने क्या खाया?",
+foodPlaceholder:"उदाहरण: चावल, चपाती, फल",
+mealQuestion:"कौन-सा भोजन?",breakfast:"नाश्ता",lunch:"दोपहर का भोजन",
+snack:"शाम का नाश्ता",dinner:"रात का भोजन",saveFood:"भोजन का विवरण सेव करें",
+foodNote:"भोजन रिकॉर्ड आपकी शुगर रीडिंग के साथ आपके खाने की समीक्षा करने में मदद करते हैं। ये साबित नहीं करते कि किसी खास भोजन से ग्लूकोज़ में बदलाव हुआ।",
+estimate:"🤖 5. स्मार्ट बदलाव अनुमान",
+estimateInfo:"यह सुविधा एक ही प्रकार की आपकी पिछली रीडिंग की समीक्षा करती है।",
+analyze:"मेरे बदलाव का विश्लेषण करें",
+estimateNote:"यह केवल एक सरल गणितीय अनुमान है, AI चिकित्सा भविष्यवाणी नहीं। यह भविष्य की शुगर नहीं बता सकता और बीमारी का निदान नहीं कर सकता।",
+report:"📄 6. मेरी शुगर रिपोर्ट डाउनलोड करें",
+reportInfo:"अपनी पिछली शुगर रीडिंग और भोजन रिकॉर्ड डाउनलोड करें।",
+download:"PDF रिपोर्ट डाउनलोड करें",
+voiceTitle:"🎤 7. आवाज़ से शुगर दर्ज करें",
+voiceInfo:"वॉइस बटन दबाएँ और ऐसा बोलें:",
+startVoice:"वॉइस इनपुट शुरू करें",
+important:"⚠️ महत्वपूर्ण स्वास्थ्य जानकारी",
+healthNote:"यह वेबसाइट सामान्य शैक्षिक जानकारी देती है। यह वास्तव में ब्लड शुगर नहीं माप सकती और न ही डायबिटीज़ का निदान कर सकती है। ग्लूकोमीटर या मेडिकल डिवाइस से मिली रीडिंग दर्ज करें। घर की एक रीडिंग से डायबिटीज़ की पुष्टि नहीं होती। लैब टेस्ट और डॉक्टर की सलाह ज़रूरी है।",
+footer:"© 2026 Healthy Bite | स्वस्थ खाएँ, स्वस्थ रहें 💚",
+noHistory:"कोई पिछली रीडिंग नहीं है।",
+needTwo:"बदलाव देखने के लिए एक ही प्रकार की कम से कम दो रीडिंग दर्ज करें।",
+increasing:"📈 आपकी हाल की रीडिंग बढ़ रही हैं। इस बारे में डॉक्टर से बात करें।",
+decreasing:"📉 आपकी हाल की रीडिंग घट रही हैं। अपनी स्वास्थ्य योजना जारी रखें।",
+stable:"➡ आपकी पहली और नवीनतम रीडिंग समान हैं।",
+validName:"कृपया सही नाम और उम्र दर्ज करें।",
+validSugar:"कृपया सही शुगर रीडिंग दर्ज करें।",
+validFood:"कृपया भोजन का नाम दर्ज करें।",
+lowTitle:"⚠️ ब्लड शुगर कम है",
+lowMessage:"आपकी रीडिंग 70 mg/dL से कम है। अपने डॉक्टर द्वारा बताई गई कम शुगर की उपचार योजना अपनाएँ। बेहोशी, भ्रम या दौरे की स्थिति में तुरंत आपातकालीन सहायता लें।",
+normalTitle:"🟢 सामान्य फास्टिंग सीमा में",
+normalMessage:"यह गैर-गर्भवती वयस्कों के लिए सामान्य लैब फास्टिंग सीमा में है।",
+preTitle:"🟡 प्रीडायबिटीज़ सीमा",
+preMessage:"यह लैब फास्टिंग ग्लूकोज़ की प्रीडायबिटीज़ सीमा में आता है। घरेलू मीटर से प्रीडायबिटीज़ की पुष्टि नहीं हो सकती। डॉक्टर से जाँच के बारे में बात करें।",
+diabetesTitle:"🔴 डायबिटीज़ सीमा",
+diabetesMessage:"यह लैब फास्टिंग ग्लूकोज़ की डायबिटीज़ सीमा में है। घरेलू मीटर की रीडिंग से डायबिटीज़ की पुष्टि नहीं होती। डॉक्टर से सलाह लें।",
+afterTitle:"📊 भोजन के बाद की रीडिंग",
+afterMessage:"भोजन के बाद की सामान्य घरेलू रीडिंग के लिए लैब की 2 घंटे वाली ग्लूकोज़ जाँच जैसे मानदंड लागू नहीं होते। डॉक्टर से बात करें।",
+randomTitle:"📊 रैंडम रीडिंग",
+randomMessage:"रैंडम रीडिंग इस बात पर निर्भर करती है कि आपने कब और क्या खाया। एक रीडिंग से डायबिटीज़ की पुष्टि नहीं होती।",
+veryHigh:"यह बहुत अधिक रीडिंग है। जल्द डॉक्टर से सलाह लें। उल्टी, साँस लेने में कठिनाई, भ्रम या गंभीर कमजोरी होने पर आपातकालीन सहायता लें।",
+remember:"याद रखें: यह केवल शैक्षिक जानकारी है, चिकित्सा निदान नहीं।",
+needThree:"कृपया एक ही प्रकार की कम से कम तीन रीडिंग दर्ज करें।",
+trendLabel:"बदलाव",average:"दर्ज रीडिंग का औसत",first:"पहली रीडिंग",latest:"नवीनतम रीडिंग",
+notForecast:"यह आपकी पिछली रीडिंग का विवरण है, भविष्य के शुगर स्तर का अनुमान नहीं।",
+listening:"सुन रहे हैं... अब बोलें।",voiceError:"आवाज़ पहचान नहीं हुई। कृपया खुद दर्ज करें।",
+voiceUnsupported:"इस ब्राउज़र में वॉइस सुविधा उपलब्ध नहीं है। Chrome आज़माएँ।",
+deleteConfirm:"क्या आप सभी शुगर रीडिंग हटाना चाहते हैं?",
+recognized:"पहचाना गया"
+}
+};
+
+let currentLanguage = localStorage.getItem("healthyBiteLanguage") || "en";
+let chart;
+
+function t(key) {
+    return translations[currentLanguage][key] || translations.en[key] || key;
+}
+
+function applyLanguage() {
+    document.documentElement.lang = currentLanguage;
+
+    document.querySelectorAll("[data-i18n]").forEach(element => {
+        const key = element.getAttribute("data-i18n");
+        element.textContent = t(key);
+    });
+
+    document.querySelectorAll("[data-placeholder]").forEach(element => {
+        const key = element.getAttribute("data-placeholder");
+        element.placeholder = t(key);
+    });
+
+    document.querySelector(".lang-btn").textContent =
+        currentLanguage === "en" ? "తెలుగు" :
+        currentLanguage === "te" ? "हिन्दी" : "English";
+
+    updateHistory();
+    displayFoods();
+    updateTrend();
+    updateChart();
+}
+
+function toggleLanguage() {
+    currentLanguage =
+        currentLanguage === "en" ? "te" :
+        currentLanguage === "te" ? "hi" : "en";
+
+    localStorage.setItem("healthyBiteLanguage", currentLanguage);
+    applyLanguage();
+}
+
+function getData(key) {
+    return JSON.parse(localStorage.getItem(key)) || [];
+}
+
+function checkSugar() {
+    let name = document.getElementById("username").value.trim();
+    let age = Number(document.getElementById("age").value);
+    let sugar = Number(document.getElementById("sugar").value);
+    let type = document.getElementById("testType").value;
+
+    if (!name || !Number.isInteger(age) || age < 1 || age > 120) {
+        alert(t("validName"));
+        return;
+    }
+
+    if (!Number.isFinite(sugar) || sugar <= 0 || sugar > 1500) {
+        alert(t("validSugar"));
+        return;
+    }
+
+    let title, message, color = "blue";
+
+    if (sugar < 70) {
+        title = t("lowTitle");
+        message = t("lowMessage");
+        color = "red";
+    } else if (type === "fasting") {
+        if (sugar < 100) {
+            title = t("normalTitle");
+            message = t("normalMessage");
+            color = "green";
+        } else if (sugar < 126) {
+            title = t("preTitle");
+            message = t("preMessage");
+            color = "yellow";
+        } else {
+            title = t("diabetesTitle");
+            message = t("diabetesMessage");
+            color = "red";
+        }
+    } else if (type === "after") {
+        title = t("afterTitle");
+        message = t("afterMessage");
+    } else {
+        title = t("randomTitle");
+        message = t("randomMessage");
+    }
+
+    if (sugar >= 300) {
+        message += " " + t("veryHigh");
+    }
+
+    let result = document.getElementById("result");
+    result.className = "result " + color;
+    result.style.display = "block";
+    result.innerHTML = `
+        <h2>${title}</h2>
+        <h3>${sugar} mg/dL</h3>
+        <p>${message}</p>
+        <p><b>${t("remember")}</b></p>
+    `;
+
+    let history = getData("sugarHistory");
+    history.unshift({
+        name, age, sugar, type,
+        date: new Date().toLocaleString(),
+        timestamp: Date.now()
+    });
+
+    localStorage.setItem("sugarHistory", JSON.stringify(history));
+    updateHistory();
+    updateTrend();
+    updateChart();
+}
+
+function updateHistory() {
+    let history = getData("sugarHistory");
+    let area = document.getElementById("history");
+
+    if (history.length === 0) {
+        area.textContent = t("noHistory");
+        return;
+    }
+
+    area.innerHTML = "";
+
+    history.forEach(item => {
+        let div = document.createElement("div");
+        div.className = "history-item";
+
+        let testName = item.type === "fasting" ? t("fasting") :
+                       item.type === "after" ? t("after") : t("random");
+
+        div.textContent =
+            item.name + " | " +
+            item.sugar + " mg/dL | " +
+            testName + " | " + item.date;
+
+        area.appendChild(div);
+    });
+}
+
+function getTrendData() {
+    let history = getData("sugarHistory");
+    let type = document.getElementById("testType").value;
+
+    return history
+        .filter(item => item.type === type)
+        .slice(0, 10)
+        .reverse();
+}
+
+function updateTrend() {
+    let readings = getTrendData();
+    let area = document.getElementById("trend");
+
+    if (readings.length < 2) {
+        area.textContent = t("needTwo");
+        return;
+    }
+
+    let first = readings[0].sugar;
+    let last = readings[readings.length - 1].sugar;
+
+    if (last > first) {
+        area.textContent = t("increasing");
+    } else if (last < first) {
+        area.textContent = t("decreasing");
+    } else {
+        area.textContent = t("stable");
+    }
+}
+
+function updateChart() {
+    let readings = getTrendData();
+    let ctx = document.getElementById("sugarChart");
+
+    if (chart) chart.destroy();
+
+    chart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: readings.map(item => item.date),
+            datasets: [{
+                label: currentLanguage === "te" ? "షుగర్ రీడింగ్ (mg/dL)" :
+                       currentLanguage === "hi" ? "शुगर रीडिंग (mg/dL)" :
+                       "Sugar Reading (mg/dL)",
+                data: readings.map(item => item.sugar),
+                borderColor: "#6dbb2d",
+                backgroundColor: "rgba(109,187,45,0.15)",
+                fill: true,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: false }
+            }
+        }
+    });
+}
+
+function saveFood() {
+    let food = document.getElementById("food").value.trim();
+    let meal = document.getElementById("meal").value;
+
+    if (!food) {
+        alert(t("validFood"));
+        return;
+    }
+
+    let foods = getData("foodHistory");
+
+    foods.unshift({
+        food,
+        meal,
+        date: new Date().toLocaleString()
+    });
+
+    localStorage.setItem("foodHistory", JSON.stringify(foods));
+    document.getElementById("food").value = "";
+    displayFoods();
+}
+
+function displayFoods() {
+    let foods = getData("foodHistory");
+    let area = document.getElementById("foodHistory");
+    area.innerHTML = "";
+
+    foods.forEach(item => {
+        let div = document.createElement("div");
+        div.className = "history-item";
+
+        let mealTranslation = {
+            "Breakfast": t("breakfast"),
+            "Lunch": t("lunch"),
+            "Evening Snack": t("snack"),
+            "Dinner": t("dinner")
+        };
+
+        div.textContent =
+            item.food + " | " +
+            (mealTranslation[item.meal] || item.meal) + " | " +
+            item.date;
+
+        area.appendChild(div);
+    });
+}
+
+function predictTrend() {
+    let readings = getTrendData();
+    let area = document.getElementById("prediction");
+    area.style.display = "block";
+
+    if (readings.length < 3) {
+        area.textContent = t("needThree");
+        return;
+    }
+
+    let values = readings.map(item => item.sugar);
+    let first = values[0];
+    let last = values[values.length - 1];
+    let average = values.reduce((a, b) => a + b, 0) / values.length;
+
+    let trend = last > first ? t("increasing") :
+                last < first ? t("decreasing") : t("stable");
+
+    area.innerHTML = `
+        <h3>${t("trendLabel")}: ${trend}</h3>
+        <p>${t("average")}: ${average.toFixed(1)} mg/dL</p>
+        <p>${t("first")}: ${first} mg/dL</p>
+        <p>${t("latest")}: ${last} mg/dL</p>
+        <p>${t("notForecast")}</p>
+    `;
+}
+
+function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    let doc = new jsPDF();
+    let history = getData("sugarHistory");
+    let foods = getData("foodHistory");
+
+    doc.setFontSize(19);
+    doc.text("Healthy Bite - Sugar Report", 15, 20);
+    doc.setFontSize(11);
+    doc.text("Sugar Reading History", 15, 35);
+
+    let y = 45;
+
+    history.forEach((item, index) => {
+        if (y > 270) {
+            doc.addPage();
+            y = 20;
+        }
+
+        doc.text(
+            `${index + 1}. ${item.name} | ${item.sugar} mg/dL | ${item.type} | ${item.date}`,
+            15, y, { maxWidth: 180 }
+        );
+        y += 12;
+    });
+
+    y += 10;
+
+    if (y > 260) {
+        doc.addPage();
+        y = 20;
+    }
+
+    doc.text("Food History", 15, y);
+    y += 10;
+
+    foods.forEach(item => {
+        if (y > 270) {
+            doc.addPage();
+            y = 20;
+        }
+
+        doc.text(
+            `${item.food} | ${item.meal} | ${item.date}`,
+            15, y, { maxWidth: 180 }
+        );
+        y += 10;
+    });
+
+    doc.save("Healthy-Bite-Sugar-Report.pdf");
+}
+
+function startVoice() {
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+        alert(t("voiceUnsupported"));
+        return;
+    }
+
+    let recognition = new SpeechRecognition();
+
+    recognition.lang =
+        currentLanguage === "te" ? "te-IN" :
+        currentLanguage === "hi" ? "hi-IN" : "en-IN";
+
+    recognition.start();
+
+    document.getElementById("voiceStatus").textContent = t("listening");
+
+    recognition.onresult = function(event) {
+        let text = event.results[0][0].transcript;
+        let match = text.match(/\d+(\.\d+)?/);
+
+        if (match) {
+            document.getElementById("sugar").value = match[0];
+        }
+
+        if (/fasting|before eating/i.test(text)) {
+            document.getElementById("testType").value = "fasting";
+        } else if (/after eating|after meal/i.test(text)) {
+            document.getElementById("testType").value = "after";
+        } else if (/random|any time/i.test(text)) {
+            document.getElementById("testType").value = "random";
+        }
+
+        document.getElementById("voiceStatus").textContent =
+            t("recognized") + ": " + text;
+    };
+
+    recognition.onerror = function() {
+        document.getElementById("voiceStatus").textContent = t("voiceError");
+    };
+}
+
+function clearHistory() {
+    if (confirm(t("deleteConfirm"))) {
+        localStorage.removeItem("sugarHistory");
+        updateHistory();
+        updateTrend();
+        updateChart();
+        document.getElementById("result").style.display = "none";
+        document.getElementById("prediction").style.display = "none";
+    }
+}
+
+document.getElementById("testType").addEventListener("change", function() {
+    updateTrend();
+    updateChart();
+});
+
+applyLanguage();
+
+</script>
+</body>
+</html>
