@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthy Bite | Organic Foods</title>
+
+<style>
+:root {
+    --green: #2f7d32;
+    --dark: #174d2b;
+    --light: #f2f8ef;
+    --text: #263328;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fbfdf9;
+    color: var(--text);
+}
+
+header {
+    background: linear-gradient(120deg, #174d2b, #398b43);
+    color: white;
+    padding: 25px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header p {
+    margin-bottom: 0;
+}
+
+nav {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.hero {
+    padding: 35px 6%;
+    background: #eaf5e5;
+    text-align: center;
+}
+
+.hero h2 {
+    color: var(--dark);
+    font-size: 30px;
+}
+
+main {
+    max-width: 1200px;
+    margin: auto;
+    padding: 25px 18px;
+}
+
+.section {
+    margin: 28px 0;
+}
+
+.section h2 {
+    color: var(--dark);
+}
+
+.toolbar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+input, select, button {
+    font: inherit;
+    border-radius: 8px;
+    padding: 11px;
+    border: 1px solid #cbd8c8;
+}
+
+.toolbar input {
+    flex: 1;
+    min-width: 220px;
+}
+
+button {
+    background: var(--green);
+    color: white;
+    border: 0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: var(--dark);
+}
+
+.category-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 10px 0 18px;
+}
+
+.category-row button {
+    background: #e4f1e1;
+    color: #245c2c;
+}
+
+.category-row button.active {
+    background: var(--green);
+    color: white;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 16px;
+}
+
+.card, .shop-card, .cart-box, .chat-box {
+    background: white;
+    border: 1px solid #e0e9dd;
+    border-radius: 13px;
+    padding: 16px;
+    box-shadow: 0 3px 12px #173b1710;
+}
+
+.product-icon {
+    height: 90px;
+    background: #f1f7ed;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    font-size: 48px;
+}
+
+.card h3 {
+    margin: 12px 0 5px;
+}
+
+.card p {
+    color: #657267;
+    font-size: 14px;
+}
+
+.price {
+    font-size: 18px;
+    color: var(--dark);
+    font-weight: bold;
+}
+
+.card button {
+    width: 100%;
+    margin-top: 8px;
+}
+
+.empty {
+    padding: 25px;
+    text-align: center;
+    color: #657267;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #edf1eb;
+}
+
+.cart-item small {
+    display: block;
+    color: #657267;
+    margin-top: 4px;
+}
+
+.qty {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.qty button {
+    padding: 5px 10px;
+}
+
+.total {
+    font-size: 21px;
+    font-weight: bold;
+    color: var(--dark);
+    margin: 18px 0;
+}
+
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.shop-card h3 {
+    color: var(--dark);
+}
+
+.shop-card p {
+    line-height: 1.6;
+}
+
+.shop-card a {
+    display: inline-block;
+    margin-top: 8px;
+    color: var(--green);
+    font-weight: bold;
+}
+
+.chat-box {
+    max-width: 750px;
+}
+
+.chat-log {
+    height: 230px;
+    overflow-y: auto;
+    background: #f7faf5;
+    padding: 12px;
+    border-radius: 9px;
+    margin-bottom: 12px;
+}
+
+.msg {
+    margin: 8px 0;
+    padding: 9px 12px;
+    border-radius: 10px;
+    max-width: 90%;
+    line-height: 1.4;
+}
+
+.bot {
+    background: #e4f1e1;
+}
+
+.user {
+    background: #dce9ff;
+    margin-left: auto;
+}
+
+.chat-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.chat-controls input {
+    flex: 1;
+    min-width: 0;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #174d2b;
+    color: white;
+    margin-top: 35px;
+}
+
+@media(max-width: 700px) {
+    header {
+        display: block;
+    }
+
+    nav {
+        margin-top: 15px;
+    }
+
+    .hero h2 {
+        font-size: 24px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div>
+        <h1>🥬 Healthy Bite</h1>
+        <p>Nature’s Goodness in Every Bite</p>
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="#products">Organic Foods</a>
+        <a href="#shops">Organic Shops</a>
+        <a href="#cart">Cart</a>
+        <a href="#assistant">Food Assistant</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h2>Discover Fresh Organic Foods</h2>
+    <p>🥬Eat Fresh, Stay Healthy, Live Naturally!.</p>
+</section>
+
+<main>
+
+<!-- PRODUCTS SECTION -->
+<section class="section" id="products">
+
+    <h2>Organic Food Products</h2>
+
+    <div class="toolbar">
+        <input
+            id="searchInput"
+            type="search"
+            placeholder="Search products (tomato, rice, milk...)"
+        >
+
+        <select id="categorySelect">
+            <option value="All">All Categories</option>
+        </select>
+    </div>
+
+    <div class="category-row" id="categoryButtons"></div>
+
+    <div class="grid" id="productGrid"></div>
+
+</section>
+
+<!-- CART SECTION -->
+<section class="section" id="cart">
+
+    <h2>🛒 Your Shopping Cart</h2>
+
+    <div class="cart-box">
+
+        <div id="cartItems">
+            <p>Your cart is empty.</p>
+        </div>
+
+        <div class="total" id="cartTotal">
+            Total: ₹0
+        </div>
+
+        <button id="placeOrderBtn">Place Order</button>
+
+        <p id="orderMessage"></p>
+
+    </div>
+
+</section>
+
+<!-- ORGANIC FOOD SHOPS -->
+<section class="section" id="shops">
+
+    <h2>Organic Food Shops</h2>
+
+    <div class="shop-grid">
+
+        <div class="shop-card">
+
+            <h3>Daman Organic Living</h3>
+
+            <p>
+                <strong>Address:</strong>
+                Ground floor, B S Space, Kimitte Square,
+                Road No. 12, NBT Nagar, Banjara Hills,
+                Hyderabad, Telangana 500028
+            </p>
+
+            <a
+                href="https://www.google.com/maps/search/?api=1&query=Daman+Organic+Living%2C+Banjara+Hills%2C+Hyderabad"
+                target="_blank"
+                rel="noopener"
+            >
+                View Location on Google Maps ↗
+            </a>
+
+        </div>
+
+        <div class="shop-card">
+
+            <h3>Akula Organics</h3>
+
+            <p>
+                <strong>Address:</strong>
+                5-101/13/A, Old Mumbai Road, HS Darga Rd,
+                Shaikpet, Rai Durg, Hyderabad,
+                Telangana 500104
+            </p>
+
+            <a
+                href="https://www.google.com/maps/search/?api=1&query=Akula+Organics%2C+Shaikpet%2C+Hyderabad"
+                target="_blank"
+                rel="noopener"
+            >
+                View Location on Google Maps ↗
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- CHATBOT SECTION -->
+<section class="section" id="assistant">
+
+    <h2>💬 Organic Food Assistant</h2>
+
+    <div class="chat-box">
+
+        <div class="chat-log" id="chatLog">
+
+            <div class="msg bot">
+                Hi! Ask me to find a product.
+                Try organic tomato, show fruits, or show all products.
+            </div>
+
+        </div>
+
+        <div class="chat-controls">
+
+            <input
+                id="chatInput"
+                type="text"
+                placeholder="Ask about an organic food..."
+            >
+
+            <button id="sendChat">Send</button>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+    © 2026 Healthy Bite | Eat Fresh • Stay Healthy
+</footer>
+
+<script>
+
+// ORGANIC FOOD PRODUCTS
+
+const products = [
+
+{id:1,name:"Organic Tomato",category:"Vegetables",price:40,unit:"kg",emoji:"🍅",aliases:["tomatoes","tamato","tamota"]},
+{id:2,name:"Organic Potato",category:"Vegetables",price:35,unit:"kg",emoji:"🥔",aliases:["potatoes","aloo"]},
+{id:3,name:"Organic Onion",category:"Vegetables",price:40,unit:"kg",emoji:"🧅",aliases:["onions"]},
+{id:4,name:"Organic Carrot",category:"Vegetables",price:60,unit:"kg",emoji:"🥕",aliases:["carrots"]},
+{id:5,name:"Organic Spinach",category:"Vegetables",price:25,unit:"bunch",emoji:"🥬",aliases:["palak"]},
+{id:6,name:"Organic Green Chilli",category:"Vegetables",price:50,unit:"kg",emoji:"🌶️",aliases:["chilli","chili","chilies","chillies","mirchi"]},
+{id:7,name:"Organic Red Chilli",category:"Vegetables",price:80,unit:"kg",emoji:"🌶️",aliases:["red chili"]},
+{id:8,name:"Organic Cabbage",category:"Vegetables",price:35,unit:"piece",emoji:"🥬",aliases:[]},
+{id:9,name:"Organic Cauliflower",category:"Vegetables",price:45,unit:"piece",emoji:"🥦",aliases:[]},
+{id:10,name:"Organic Cucumber",category:"Vegetables",price:30,unit:"kg",emoji:"🥒",aliases:[]},
+{id:11,name:"Organic Brinjal",category:"Vegetables",price:40,unit:"kg",emoji:"🍆",aliases:["eggplant"]},
+{id:12,name:"Organic Beetroot",category:"Vegetables",price:45,unit:"kg",emoji:"🫜",aliases:["beet"]},
+{id:13,name:"Organic Okra",category:"Vegetables",price:50,unit:"kg",emoji:"🥬",aliases:["ladies finger","bhindi"]},
+{id:14,name:"Organic Garlic",category:"Vegetables",price:120,unit:"kg",emoji:"🧄",aliases:[]},
+{id:15,name:"Organic Ginger",category:"Vegetables",price:100,unit:"kg",emoji:"🫚",aliases:[]},
+{id:16,name:"Organic Broccoli",category:"Vegetables",price:90,unit:"piece",emoji:"🥦",aliases:[]},
+{id:17,name:"Organic Pumpkin",category:"Vegetables",price:35,unit:"kg",emoji:"🎃",aliases:[]},
+{id:18,name:"Organic Sweet Potato",category:"Vegetables",price:50,unit:"kg",emoji:"🍠",aliases:[]},
+{id:19,name:"Organic Beans",category:"Vegetables",price:60,unit:"kg",emoji:"🫘",aliases:["green beans"]},
+{id:20,name:"Organic Capsicum",category:"Vegetables",price:70,unit:"kg",emoji:"🫑",aliases:["bell pepper"]},
+
+{id:21,name:"Organic Apple",category:"Fruits",price:180,unit:"kg",emoji:"🍎",aliases:["apples"]},
+{id:22,name:"Organic Banana",category:"Fruits",price:60,unit:"dozen",emoji:"🍌",aliases:["bananas"]},
+{id:23,name:"Organic Orange",category:"Fruits",price:90,unit:"kg",emoji:"🍊",aliases:["oranges"]},
+{id:24,name:"Organic Mango",category:"Fruits",price:120,unit:"kg",emoji:"🥭",aliases:["mangoes"]},
+{id:25,name:"Organic Grapes",category:"Fruits",price:100,unit:"kg",emoji:"🍇",aliases:[]},
+{id:26,name:"Organic Papaya",category:"Fruits",price:50,unit:"kg",emoji:"🍈",aliases:[]},
+{id:27,name:"Organic Pomegranate",category:"Fruits",price:160,unit:"kg",emoji:"ザ",aliases:["anar"]},
+{id:28,name:"Organic Guava",category:"Fruits",price:70,unit:"kg",emoji:"🍐",aliases:[]},
+{id:29,name:"Organic Watermelon",category:"Fruits",price:35,unit:"kg",emoji:"🍉",aliases:[]},
+{id:30,name:"Organic Pineapple",category:"Fruits",price:65,unit:"piece",emoji:"🍍",aliases:[]},
+
+{id:31,name:"Organic Toor Dal",category:"Pulses",price:150,unit:"kg",emoji:"🫘",aliases:["arhar dal","kandi pappu"]},
+{id:32,name:"Organic Moong Dal",category:"Pulses",price:140,unit:"kg",emoji:"🫘",aliases:["pesara pappu"]},
+{id:33,name:"Organic Chana Dal",category:"Pulses",price:110,unit:"kg",emoji:"🫘",aliases:["senaga pappu"]},
+{id:34,name:"Organic Urad Dal",category:"Pulses",price:145,unit:"kg",emoji:"🫘",aliases:["minapa pappu"]},
+{id:35,name:"Organic Masoor Dal",category:"Pulses",price:125,unit:"kg",emoji:"🫘",aliases:["red lentils"]},
+{id:36,name:"Organic Chickpeas",category:"Pulses",price:120,unit:"kg",emoji:"🫘",aliases:["chana"]},
+{id:37,name:"Organic Green Gram",category:"Pulses",price:130,unit:"kg",emoji:"🫘",aliases:["whole moong"]},
+{id:38,name:"Organic Rajma",category:"Pulses",price:160,unit:"kg",emoji:"🫘",aliases:["kidney beans"]},
+
+{id:39,name:"Organic Rice",category:"Grains",price:75,unit:"kg",emoji:"🍚",aliases:["biyyam"]},
+{id:40,name:"Organic Brown Rice",category:"Grains",price:95,unit:"kg",emoji:"🍚",aliases:[]},
+{id:41,name:"Organic Wheat",category:"Grains",price:45,unit:"kg",emoji:"🌾",aliases:["godhuma"]},
+{id:42,name:"Organic Wheat Flour",category:"Grains",price:55,unit:"kg",emoji:"🌾",aliases:["atta"]},
+{id:43,name:"Organic Ragi",category:"Grains",price:60,unit:"kg",emoji:"🌾",aliases:["finger millet"]},
+{id:44,name:"Organic Jowar",category:"Grains",price:65,unit:"kg",emoji:"🌾",aliases:["sorghum"]},
+{id:45,name:"Organic Bajra",category:"Grains",price:55,unit:"kg",emoji:"🌾",aliases:["pearl millet"]},
+{id:46,name:"Organic Oats",category:"Grains",price:130,unit:"kg",emoji:"🥣",aliases:[]},
+
+{id:47,name:"Organic Turmeric",category:"Spices",price:180,unit:"kg",emoji:"🟡",aliases:["pasupu"]},
+{id:48,name:"Organic Cumin",category:"Spices",price:300,unit:"kg",emoji:"🌿",aliases:["jeera"]},
+{id:49,name:"Organic Coriander Seeds",category:"Spices",price:160,unit:"kg",emoji:"🌿",aliases:["dhania"]},
+{id:50,name:"Organic Black Pepper",category:"Spices",price:650,unit:"kg",emoji:"⚫",aliases:["pepper"]},
+{id:51,name:"Organic Cardamom",category:"Spices",price:1400,unit:"kg",emoji:"🌱",aliases:["elaichi"]},
+{id:52,name:"Organic Cinnamon",category:"Spices",price:450,unit:"kg",emoji:"🪵",aliases:["dalchini"]},
+
+{id:53,name:"Organic Almonds",category:"Nuts & Seeds",price:850,unit:"kg",emoji:"🌰",aliases:["badam"]},
+{id:54,name:"Organic Cashews",category:"Nuts & Seeds",price:900,unit:"kg",emoji:"🥜",aliases:["kaju"]},
+{id:55,name:"Organic Walnuts",category:"Nuts & Seeds",price:950,unit:"kg",emoji:"🌰",aliases:["akhrot"]},
+{id:56,name:"Organic Peanuts",category:"Nuts & Seeds",price:180,unit:"kg",emoji:"🥜",aliases:["groundnuts","palli"]},
+{id:57,name:"Organic Chia Seeds",category:"Nuts & Seeds",price:400,unit:"kg",emoji:"🌱",aliases:[]},
+{id:58,name:"Organic Flax Seeds",category:"Nuts & Seeds",price:220,unit:"kg",emoji:"🌱",aliases:["alsi"]},
+{id:59,name:"Organic Pumpkin Seeds",category:"Nuts & Seeds",price:500,unit:"kg",emoji:"🌱",aliases:[]},
+
+{id:60,name:"Organic Milk",category:"Dairy",price:70,unit:"litre",emoji:"🥛",aliases:[]},
+{id:61,name:"Organic Curd",category:"Dairy",price:80,unit:"kg",emoji:"🥣",aliases:["yogurt","dahi"]},
+{id:62,name:"Organic Paneer",category:"Dairy",price:380,unit:"kg",emoji:"🧀",aliases:[]},
+{id:63,name:"Organic Ghee",category:"Dairy",price:750,unit:"litre",emoji:"🧈",aliases:[]},
+{id:64,name:"Organic Butter",category:"Dairy",price:500,unit:"kg",emoji:"🧈",aliases:[]},
+
+{id:65,name:"Organic Honey",category:"Other Foods",price:350,unit:"kg",emoji:"🍯",aliases:[]},
+{id:66,name:"Organic Jaggery",category:"Other Foods",price:70,unit:"kg",emoji:"🟤",aliases:["bellam"]},
+{id:67,name:"Organic Coconut Oil",category:"Other Foods",price:250,unit:"litre",emoji:"🥥",aliases:[]},
+{id:68,name:"Organic Sesame Oil",category:"Other Foods",price:300,unit:"litre",emoji:"🫗",aliases:["nuvvula oil"]},
+{id:69,name:"Organic Green Tea",category:"Other Foods",price:220,unit:"pack",emoji:"🍵",aliases:[]},
+{id:70,name:"Organic Dates",category:"Other Foods",price:280,unit:"kg",emoji:"🌴",aliases:["khajoor"]},
+{id:71,name:"Organic Raisins",category:"Other Foods",price:300,unit:"kg",emoji:"🍇",aliases:["kishmish"]},
+{id:72,name:"Organic Coconut",category:"Other Foods",price:45,unit:"piece",emoji:"🥥",aliases:["kobbari"]},
+{id:73,name:"Organic Lemon",category:"Fruits",price:60,unit:"kg",emoji:"🍋",aliases:["lemons","nimmakaya"]}
+
+];
+
+// DISPLAY CATEGORIES
+
+const categories = [
+    "All",
+    ...new Set(products.map(p => p.category))
+];
+
+const grid = document.getElementById("productGrid");
+const searchInput = document.getElementById("searchInput");
+const categorySelect = document.getElementById("categorySelect");
+const categoryButtons = document.getElementById("categoryButtons");
+
+let selectedCategory = "All";
+let cart = {};
+
+categories.slice(1).forEach(category => {
+    let option = document.createElement("option");
+    option.value = category;
+    option.textContent = category;
+    categorySelect.appendChild(option);
+});
+
+categories.forEach(category => {
+
+    let button = document.createElement("button");
+
+    button.textContent = category;
+
+    if (category === "All") {
+        button.classList.add("active");
+    }
+
+    button.onclick = () => {
+
+        selectedCategory = category;
+        categorySelect.value = category;
+
+        [...categoryButtons.children].forEach(b => {
+            b.classList.toggle("active", b.textContent === category);
+        });
+
+        renderProducts();
+    };
+
+    categoryButtons.appendChild(button);
+
+});
+
+// DISPLAY PRODUCTS
+
+function renderProducts() {
+
+    const query = searchInput.value.trim().toLowerCase();
+
+    const filtered = products.filter(product => {
+
+        const matchesCategory =
+            selectedCategory === "All" ||
+            product.category === selectedCategory;
+
+        const matchesSearch =
+            !query ||
+            [product.name, product.category, ...product.aliases]
+                .join(" ")
+                .toLowerCase()
+                .includes(query);
+
+        return matchesCategory && matchesSearch;
+
+    });
+
+    grid.innerHTML = "";
+
+    if (filtered.length === 0) {
+        grid.innerHTML =
+            "<div class='empty'>No matching products found.</div>";
+        return;
+    }
+
+    filtered.forEach(product => {
+
+        const card = document.createElement("article");
+
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="product-icon">${product.emoji}</div>
+            <h3>${product.name}</h3>
+            <p>${product.category}</p>
+            <div class="price">
+                ₹${product.price} / ${product.unit}
+            </div>
+            <button onclick="addToCart(${product.id})">
+                Add to Cart
+            </button>
+        `;
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+searchInput.addEventListener("input", renderProducts);
+
+categorySelect.addEventListener("change", () => {
+
+    selectedCategory = categorySelect.value;
+
+    [...categoryButtons.children].forEach(button => {
+        button.classList.toggle(
+            "active",
+            button.textContent === selectedCategory
+        );
+    });
+
+    renderProducts();
+
+});
+
+// CART FUNCTIONS
+
+function addToCart(id) {
+
+    cart[id] = (cart[id] || 0) + 1;
+
+    renderCart();
+
+}
+
+function changeQty(id, amount) {
+
+    cart[id] = (cart[id] || 0) + amount;
+
+    if (cart[id] <= 0) {
+        delete cart[id];
+    }
+
+    renderCart();
+
+}
+
+function renderCart() {
+
+    const box = document.getElementById("cartItems");
+
+    const ids = Object.keys(cart);
+
+    if (ids.length === 0) {
+
+        box.innerHTML = "<p>Your cart is empty.</p>";
+
+        document.getElementById("cartTotal").textContent =
+            "Total: ₹0";
+
+        return;
+
+    }
+
+    let total = 0;
+
+    box.innerHTML = "";
+
+    ids.forEach(id => {
+
+        const product = products.find(
+            p => p.id === Number(id)
+        );
+
+        const quantity = cart[id];
+
+        total += product.price * quantity;
+
+        const row = document.createElement("div");
+
+        row.className = "cart-item";
+
+        row.innerHTML = `
+            <div>
+                <strong>${product.name}</strong>
+                <small>
+                    ₹${product.price} × ${quantity}
+                </small>
+            </div>
+
+            <div class="qty">
+                <button onclick="changeQty(${product.id}, -1)">−</button>
+                <span>${quantity}</span>
+                <button onclick="changeQty(${product.id}, 1)">+</button>
+            </div>
+        `;
+
+        box.appendChild(row);
+
+    });
+
+    document.getElementById("cartTotal").textContent =
+        "Total: ₹" + total;
+
+}
+
+// DEMO ORDER
+
+document.getElementById("placeOrderBtn").addEventListener(
+    "click",
+    () => {
+
+        const message = document.getElementById("orderMessage");
+
+        if (Object.keys(cart).length === 0) {
+
+            message.textContent =
+                "Please add products to your cart first.";
+
+            return;
+
+        }
+
+        message.textContent =
+            "Demo order placed successfully! This page does not process real payments or send orders to a shop.";
+
+        cart = {};
+
+        renderCart();
+
+    }
+);
+
+// CHATBOT
+
+const chatLog = document.getElementById("chatLog");
+const chatInput = document.getElementById("chatInput");
+
+function addMessage(text, who) {
+
+    const message = document.createElement("div");
+
+    message.className = "msg " + who;
+
+    message.textContent = text;
+
+    chatLog.appendChild(message);
+
+    chatLog.scrollTop = chatLog.scrollHeight;
+
+}
+
+function normalize(text) {
+
+    return text
+        .toLowerCase()
+        .replace(/[^\w\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+}
+
+function answerChat(raw) {
+
+    const text = normalize(raw);
+
+    if (!text) {
+        return "Please type a food product or category.";
+    }
+
+    if (/\b(show all|all products|everything|list all)\b/.test(text)) {
+
+        return "Here are all 73 products in the catalogue. Scroll up to browse them.";
+
+    }
+
+    const ignoredWords = [
+        "organic", "food", "foods", "show",
+        "find", "search", "please", "give",
+        "me", "want", "need", "display",
+        "list", "product", "products",
+        "do", "you", "have", "any",
+        "is", "there"
+    ];
+
+    const cleaned = text
+        .split(" ")
+        .filter(word => !ignoredWords.includes(word))
+        .join(" ")
+        .trim();
+
+    if (!cleaned) {
+        return "Please enter a product name or category.";
+    }
+
+    const category = categories.slice(1).find(
+        c => normalize(c) === cleaned
+    );
+
+    if (category) {
+
+        selectedCategory = category;
+
+        categorySelect.value = category;
+
+        searchInput.value = "";
+
+        [...categoryButtons.children].forEach(button => {
+            button.classList.toggle(
+                "active",
+                button.textContent === category
+            );
+        });
+
+        renderProducts();
+
+        return "Showing products in " + category + ". Check the list above.";
+
+    }
+
+    let matches = products.filter(product => {
+
+        return [product.name, ...product.aliases].some(alias => {
+
+            const normalizedAlias = normalize(alias)
+                .replace(/^organic /, "");
+
+            return normalizedAlias === cleaned;
+
+        });
+
+    });
+
+    if (matches.length === 0 && cleaned.length >= 3) {
+
+        matches = products.filter(product => {
+
+            return [product.name, ...product.aliases].some(alias => {
+
+                const normalizedAlias = normalize(alias)
+                    .replace(/^organic /, "");
+
+                return normalizedAlias.includes(cleaned);
+
+            });
+
+        });
+
+    }
+
+    if (matches.length > 0) {
+
+        selectedCategory = "All";
+
+        categorySelect.value = "All";
+
+        searchInput.value = "";
+
+        [...categoryButtons.children].forEach(button => {
+            button.classList.toggle(
+                "active",
+                button.textContent === "All"
+            );
+        });
+
+        renderProducts();
+
+        return "I found: " +
+            matches.map(product =>
+                `${product.name} – ₹${product.price}/${product.unit}`
+            ).join("; ");
+
+    }
+
+    return "Sorry, I couldn't find that product in my current catalogue. Try tomato, rice, milk, fruits, or vegetables.";
+
+}
+
+function sendChat() {
+
+    const value = chatInput.value.trim();
+
+    if (!value) return;
+
+    addMessage(value, "user");
+
+    const response = answerChat(value);
+
+    addMessage(response, "bot");
+
+    chatInput.value = "";
+
+}
+
+document.getElementById("sendChat")
+    .addEventListener("click", sendChat);
+
+chatInput.addEventListener("keydown", event => {
+
+    if (event.key === "Enter") {
+        sendChat();
+    }
+
+});
+
+// INITIAL DISPLAY
+
+renderProducts();
+
+renderCart();
+
+</script>
+
+</body>
+</html>
