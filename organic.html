@@ -12,6 +12,16 @@
     --light: #f2f8ef;
     --text: #263328;
 }
+.add-message {
+    display: block !important;
+    color: green;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 8px;
+    text-align: center;
+    min-height: 20px;
+    visibility: visible;
+}
 
 * {
     box-sizing: border-box;
@@ -336,6 +346,7 @@ footer {
     <div class="category-row" id="categoryButtons"></div>
 
     <div class="grid" id="productGrid"></div>
+    
 
 </section>
 
@@ -343,6 +354,7 @@ footer {
 <section class="section" id="cart">
 
     <h2>🛒 Your Shopping Cart</h2>
+
 
     <div class="cart-box">
 
@@ -627,17 +639,23 @@ function renderProducts() {
 
         card.className = "card";
 
-        card.innerHTML = `
-            <div class="product-icon">${product.emoji}</div>
-            <h3>${product.name}</h3>
-            <p>${product.category}</p>
-            <div class="price">
-                ₹${product.price} / ${product.unit}
-            </div>
-            <button onclick="addToCart(${product.id})">
-                Add to Cart
-            </button>
-        `;
+       card.innerHTML = `
+    <div class="product-icon">${product.emoji}</div>
+
+    <h3>${product.name}</h3>
+
+    <p>${product.category}</p>
+
+    <div class="price">
+        ₹${product.price} / ${product.unit}
+    </div>
+
+    <button onclick="addToCart(${product.id})">
+        Add to Cart
+    </button>
+
+    <p id="message-${product.id}" class="add-message"></p>
+`;
 
         grid.appendChild(card);
 
@@ -663,6 +681,7 @@ categorySelect.addEventListener("change", () => {
 });
 
 // CART FUNCTIONS
+let messageTimers = {};
 
 function addToCart(id) {
 
@@ -670,8 +689,19 @@ function addToCart(id) {
 
     renderCart();
 
-}
+    const message = document.getElementById("message-" + id);
 
+    message.textContent = "✅ Added to cart successfully!";
+
+    clearTimeout(messageTimers[id]);
+
+    messageTimers[id] = setTimeout(() => {
+
+        message.textContent = "";
+
+    }, 3000);
+
+}
 function changeQty(id, amount) {
 
     cart[id] = (cart[id] || 0) + amount;
