@@ -12,13 +12,13 @@ body{
     margin:0;
     font-family:Arial,sans-serif;
     background:#f5fff8;
-    color:#1f2937
+    color:#1f2937;
 }
 
 header{
     background:green;
     color:white;
-    padding:22px
+    padding:22px;
 }
 
 .header-content{
@@ -26,31 +26,48 @@ header{
     margin:auto;
     display:flex;
     justify-content:space-between;
-    align-items:center
+    align-items:center;
+    gap:15px;
 }
 
 .logo{
     display:flex;
     align-items:center;
-    gap:12px
+    gap:12px;
 }
 
 .logo-icon{font-size:30px}
 
 .logo h1{
     margin:0;
-    font-size:28px
+    font-size:28px;
 }
 
 .logo p{
     margin:4px 0 0;
-    opacity:.9
+    opacity:.9;
+}
+
+.language-control{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.language-control label{margin:0}
+
+select{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+    max-width:100%;
 }
 
 .container{
     max-width:1200px;
     margin:auto;
-    padding:25px
+    padding:25px;
 }
 
 .card,.stat{
@@ -58,19 +75,19 @@ header{
     border-radius:15px;
     padding:20px;
     margin-bottom:20px;
-    box-shadow:0 4px 15px rgba(0,0,0,.06)
+    box-shadow:0 4px 15px rgba(0,0,0,.06);
 }
 
 .form-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:18px
+    gap:18px;
 }
 
 label{
     display:block;
     font-weight:bold;
-    margin-bottom:7px
+    margin-bottom:7px;
 }
 
 input{
@@ -78,12 +95,12 @@ input{
     padding:12px;
     border:1px solid #ccc;
     border-radius:9px;
-    font-size:15px
+    font-size:15px;
 }
 
 input:focus{
     outline:none;
-    border-color:green
+    border-color:green;
 }
 
 button{
@@ -91,14 +108,14 @@ button{
     cursor:pointer;
     padding:12px 18px;
     border-radius:9px;
-    font-weight:bold
+    font-weight:bold;
 }
 
 .primary-btn{
     width:100%;
     margin-top:20px;
     background:green;
-    color:white
+    color:white;
 }
 
 .primary-btn:hover{background:darkgreen}
@@ -106,98 +123,123 @@ button{
 .dashboard{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:15px
+    gap:15px;
 }
 
 .stat-title{
     color:#666;
-    font-size:14px
+    font-size:14px;
 }
 
 .stat-value{
     font-size:24px;
     font-weight:bold;
-    margin-top:8px
+    margin-top:8px;
 }
 
 .status{
     padding:15px;
     border-radius:10px;
     font-size:17px;
-    font-weight:bold
+    font-weight:bold;
 }
 
 .normal{
     background:#dcfce7;
-    color:#166534
+    color:#166534;
 }
 
 .low{
     background:#fff7ed;
-    color:#9a3412
+    color:#9a3412;
 }
 
 .high{
     background:#fee2e2;
-    color:#b91c1c
+    color:#b91c1c;
 }
 
 .analysis-box,.food-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:20px
+    gap:20px;
 }
 
 .metric{
     background:#f0fdf4;
     border-radius:10px;
-    padding:18px
+    padding:18px;
 }
 
 .metric strong{
     display:block;
     font-size:21px;
-    margin-top:6px
+    margin-top:6px;
 }
 
 .table-container{overflow-x:auto}
 
 table{
     width:100%;
-    border-collapse:collapse
+    border-collapse:collapse;
 }
 
 th{
     background:#dcfce7;
-    color:#166534
+    color:#166534;
 }
 
 th,td{
     padding:12px;
     border-bottom:1px solid #ddd;
-    text-align:center
+    text-align:center;
 }
 
 .delete-btn{
     background:#fee2e2;
     color:#b91c1c;
     padding:7px 12px;
-    font-size:12px
+    font-size:12px;
+}
+
+/* BP HISTORY STATUS */
+.bp-badge{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.bp-badge.low{
+    background:#fff7ed;
+    color:#9a3412;
+}
+
+.bp-badge.high{
+    background:#fee2e2;
+    color:#b91c1c;
+}
+
+.bp-badge.normal{
+    background:#dcfce7;
+    color:#166534;
 }
 
 .food-card{
     padding:20px;
-    border-radius:15px
+    border-radius:15px;
 }
 
 .low-food{
     background:#fff7ed;
-    border:1px solid #fed7aa
+    border:1px solid #fed7aa;
 }
 
 .high-food{
     background:#ecfdf5;
-    border:1px solid #a7f3d0
+    border:1px solid #a7f3d0;
 }
 
 .food-card li{margin:9px 0}
@@ -208,30 +250,37 @@ th,td{
     padding:15px;
     border-radius:8px;
     font-size:14px;
-    line-height:1.6
+    line-height:1.6;
 }
 
 @media(max-width:800px){
+
     .header-content{
         flex-direction:column;
         align-items:flex-start;
-        gap:15px
+        gap:15px;
     }
 
     .dashboard{
-        grid-template-columns:1fr 1fr
+        grid-template-columns:1fr 1fr;
     }
 
     .form-grid,
     .food-grid,
     .analysis-box{
-        grid-template-columns:1fr
+        grid-template-columns:1fr;
     }
 }
 
 @media(max-width:500px){
+
     .dashboard{grid-template-columns:1fr}
+
     .container{padding:15px}
+
+    .language-control{width:100%}
+
+    select{flex:1}
 }
 </style>
 </head>
@@ -239,81 +288,177 @@ th,td{
 <body>
 
 <header>
+
 <div class="header-content">
+
     <div class="logo">
+
         <div class="logo-icon">❤️</div>
+
         <div>
             <h1>BP Control</h1>
-            <p>Track Your Blood Pressure & Get Food Guidance</p>
+
+            <p data-i18n="tagline">
+                Track Your Blood Pressure & Get Food Guidance
+            </p>
         </div>
+
     </div>
+
+    <!-- LANGUAGE SELECTOR -->
+
+    <div class="language-control">
+
+        <label for="language" data-i18n="languageLabel">
+            Language:
+        </label>
+
+        <select id="language"
+        onchange="changeLanguage(this.value)">
+
+            <option value="en">English</option>
+            <option value="te">తెలుగు</option>
+            <option value="hi">हिन्दी</option>
+
+        </select>
+
+    </div>
+
 </div>
+
 </header>
 
 <div class="container">
+
+<!-- PATIENT DETAILS -->
+
 <div class="card">
-<h2>👤 Patient Details</h2>
+
+<h2 data-i18n="patientDetails">
+👤 Patient Details
+</h2>
 
 <div class="form-grid">
 
 <div>
-<label>Age</label>
-<input type="number" id="age" min="1" max="120" placeholder="Example: 65">
+
+<label data-i18n="age">Age</label>
+
+<input type="number" id="age"
+min="1" max="120"
+placeholder="Example: 65"
+data-i18n-placeholder="agePlaceholder">
+
 </div>
 
 <div>
-<label>BP Check Date</label>
+
+<label data-i18n="checkDate">
+BP Check Date
+</label>
+
 <input type="date" id="date">
+
 </div>
 
 <div>
-<label>Systolic BP</label>
-<input type="number" id="sys" min="50" max="250" placeholder="Example: 120">
+
+<label data-i18n="systolic">
+Systolic BP
+</label>
+
+<input type="number" id="sys"
+min="50" max="250"
+placeholder="Example: 120"
+data-i18n-placeholder="systolicPlaceholder">
+
 </div>
 
 <div>
-<label>Diastolic BP</label>
-<input type="number" id="dia" min="30" max="150" placeholder="Example: 80">
-</div>
+
+<label data-i18n="diastolic">
+Diastolic BP
+</label>
+
+<input type="number" id="dia"
+min="30" max="150"
+placeholder="Example: 80"
+data-i18n-placeholder="diastolicPlaceholder">
 
 </div>
 
-<button class="primary-btn" onclick="addReading()">
+</div>
+
+<button class="primary-btn"
+onclick="addReading()"
+data-i18n="addReading">
+
 ➕ Add BP Reading
+
 </button>
+
 </div>
 
 <!-- DASHBOARD -->
+
 <div class="dashboard">
 
 <div class="stat">
-<div class="stat-title">Patient Age</div>
+
+<div class="stat-title" data-i18n="patientAge">
+Patient Age
+</div>
+
 <div class="stat-value" id="showAge">-</div>
+
 </div>
 
 <div class="stat">
-<div class="stat-title">Total Readings</div>
+
+<div class="stat-title" data-i18n="totalReadings">
+Total Readings
+</div>
+
 <div class="stat-value" id="count">0</div>
+
 </div>
 
 <div class="stat">
-<div class="stat-title">Average BP</div>
+
+<div class="stat-title" data-i18n="averageBP">
+Average BP
+</div>
+
 <div class="stat-value" id="avg">-</div>
+
 </div>
 
 <div class="stat">
-<div class="stat-title">Latest BP</div>
+
+<div class="stat-title" data-i18n="latestBP">
+Latest BP
+</div>
+
 <div class="stat-value" id="latest">-</div>
-</div>
 
 </div>
 
-<!-- ANALYSIS -->
+</div>
+
+<!-- BP ANALYSIS -->
+
 <div class="card">
-<h2>📊 BP Analysis</h2>
 
-<div id="status" class="status normal">
+<h2 data-i18n="bpAnalysis">
+📊 BP Analysis
+</h2>
+
+<div id="status"
+class="status normal"
+data-i18n="noData">
+
 No BP data available
+
 </div>
 
 <br>
@@ -321,209 +466,801 @@ No BP data available
 <div class="analysis-box">
 
 <div class="metric">
+
+<span data-i18n="systolicAverage">
 Systolic Average
+</span>
+
 <strong id="avgSys">-</strong>
+
 </div>
 
 <div class="metric">
+
+<span data-i18n="diastolicAverage">
 Diastolic Average
+</span>
+
 <strong id="avgDia">-</strong>
+
 </div>
 
 </div>
+
 </div>
 
-<!-- HISTORY -->
+<!-- BP HISTORY -->
+
 <div class="card">
-<h2>📅 BP History</h2>
+
+<h2 data-i18n="bpHistory">
+📅 BP History
+</h2>
 
 <div class="table-container">
+
 <table>
 
 <thead>
+
 <tr>
-<th>Date</th>
-<th>Systolic</th>
-<th>Diastolic</th>
+
+<th data-i18n="date">Date</th>
+
+<th data-i18n="systolic">Systolic</th>
+
+<th data-i18n="diastolic">Diastolic</th>
+
 <th>BP</th>
-<th>Action</th>
+
+<th data-i18n="bpStatus">BP Status</th>
+
+<th data-i18n="action">Action</th>
+
 </tr>
+
 </thead>
 
 <tbody id="history"></tbody>
 
 </table>
-</div>
+
 </div>
 
-<!-- FOOD -->
+</div>
+
+<!-- FOOD GUIDANCE -->
+
 <div class="card">
-<h2>🥗 Food Guidance</h2>
 
-<p>Food suggestions are separated according to the BP category.</p>
+<h2 data-i18n="foodGuidance">
+🥗 Food Guidance
+</h2>
+
+<p data-i18n="foodIntro">
+Food suggestions are separated according to the BP category.
+</p>
 
 <div class="food-grid">
 
 <div class="food-card low-food">
-<h2>🟠 Foods for LOW BP</h2>
+
+<h2 data-i18n="lowFoods">
+🟠 Foods for LOW BP
+</h2>
 <ul>
-<li>Banana</li>
-<li>Milk and yogurt</li>
-<li>Dates and raisins</li>
-<li>Eggs</li>
-<li>Chicken</li>
-<li>Soups and fluids</li>
+    <li data-i18n="lowFood1">🥚 Eggs</li>
+    <li data-i18n="lowFood2">🍗 Chicken</li>
+    <li data-i18n="lowFood3">🧀 Paneer</li>
+    <li data-i18n="lowFood4">🥜 Nuts</li>
+    <li data-i18n="lowFood5">🫜 Beetroot</li>
+    <li data-i18n="lowFood6">🥔 Potato</li>
+    <li data-i18n="lowFood7">🍎 Pomegranate</li>
+    <li data-i18n="lowFood8">🥛 Milk</li>
 </ul>
 </div>
 
 <div class="food-card high-food">
-<h2>🟢 Foods for HIGH BP</h2>
+
+<h2 data-i18n="highFoods">
+🟢 Foods for HIGH BP
+</h2>
+
+
+
 <ul>
-<li>Leafy green vegetables</li>
-<li>Oats</li>
-<li>Orange and other fruits</li>
-<li>Unsalted nuts</li>
-<li>Beans and lentils</li>
-<li>Low-sodium meals</li>
+    <li data-i18n="highFood1">🍊 Orange</li>
+    <li data-i18n="highFood2">🥣 Oats</li>
+    <li data-i18n="highFood3">🌰 Almonds</li>
+    <li data-i18n="highFood4">🥬 Spinach</li>
+    <li data-i18n="highFood5">🍌 Banana</li>
+    <li data-i18n="highFood6">🍅 Tomato</li>
+    <li data-i18n="highFood7">🥒 Cucumber</li>
+    <li data-i18n="highFood8">🥛 Low-fat milk</li>
+    <li data-i18n="highFood9">🐟 Fish</li>
+    <li data-i18n="highFood10">🧂 Low-salt foods</li>
 </ul>
+
+
+
 </div>
 
 </div>
+
 </div>
 
-<!-- NOTICE -->
+<!-- IMPORTANT NOTICE -->
+
 <div class="notice">
-<strong>⚠️ Important:</strong>
+
+<strong data-i18n="important">
+⚠️ Important:
+</strong>
+
+<span data-i18n="noticeText">
+
 This website is intended for BP tracking and educational food guidance.
 It does not measure blood pressure by itself and should not replace a
 validated blood-pressure monitor or professional medical advice.
+
+</span>
+
 </div>
 
 </div>
 
 <script>
 
-let data=[];
+let data = [];
+
+let currentLanguage = "en";
+
+
+// THREE LANGUAGE TRANSLATIONS
+
+const translations = {
+
+en: {
+
+languageLabel:"Language:",
+
+tagline:"Track Your Blood Pressure & Get Food Guidance",
+
+patientDetails:"👤 Patient Details",
+
+age:"Age",
+
+checkDate:"BP Check Date",
+
+systolic:"Systolic BP",
+
+diastolic:"Diastolic BP",
+
+agePlaceholder:"Example: 65",
+
+systolicPlaceholder:"Example: 120",
+
+diastolicPlaceholder:"Example: 80",
+
+addReading:"➕ Add BP Reading",
+
+patientAge:"Patient Age",
+
+years:"years",
+
+totalReadings:"Total Readings",
+
+averageBP:"Average BP",
+
+latestBP:"Latest BP",
+
+bpAnalysis:"📊 BP Analysis",
+
+noData:"No BP data available",
+
+systolicAverage:"Systolic Average",
+
+diastolicAverage:"Diastolic Average",
+
+bpHistory:"📅 BP History",
+
+date:"Date",
+
+action:"Action",
+
+bpStatus:"BP Status",
+
+delete:"Delete",
+
+foodGuidance:"🥗 Food Guidance",
+
+foodIntro:"Food suggestions are separated according to the BP category.",
+
+lowFoods:"🟠 Foods for LOW BP",
+
+highFoods:"🟢 Foods for HIGH BP",
+
+lowFood1:"🥚 Eggs",
+lowFood2:"🍗 Chicken",
+lowFood3:"🧀 Paneer",
+lowFood4:"🥜 Nuts",
+lowFood5:"🫜 Beetroot",
+lowFood6:"🥔 Potato",
+lowFood7:"🍎 Pomegranate",
+lowFood8:"🥛 Milk",
+
+highFood1:"🍊 Orange",
+highFood2:"🥣 Oats",
+highFood3:"🌰 Almonds",
+highFood4:"🥬 Spinach",
+highFood5:"🍌 Banana",
+highFood6:"🍅 Tomato",
+highFood7:"🥒 Cucumber",
+highFood8:"🥛 Low-fat milk",
+highFood9:"🐟 Fish",
+highFood10:"🧂 Low-salt foods",
+
+important:"⚠️ Important:",
+
+noticeText:"This website is intended for BP tracking and educational food guidance. It does not measure blood pressure by itself and should not replace a validated blood-pressure monitor or professional medical advice.",
+
+fillFields:"Please fill all fields.",
+
+validAge:"Please enter a valid age.",
+
+validSystolic:"Please enter a valid systolic BP.",
+
+validDiastolic:"Please enter a valid diastolic BP.",
+
+lowStatus:"🟠 LOW BP",
+
+highStatus:"🔴 HIGH / ABOVE NORMAL",
+
+normalStatus:"🟢 NORMAL BP",
+
+mmHg:" mmHg"
+
+},
+
+
+te: {
+
+languageLabel:"భాష:",
+
+tagline:"మీ రక్తపోటును నమోదు చేయండి & ఆహార సూచనలు పొందండి",
+
+patientDetails:"👤 రోగి వివరాలు",
+
+age:"వయస్సు",
+
+checkDate:"బీపీ పరీక్ష తేదీ",
+
+systolic:"సిస్టోలిక్ బీపీ",
+
+diastolic:"డయాస్టోలిక్ బీపీ",
+
+agePlaceholder:"ఉదాహరణ: 65",
+
+systolicPlaceholder:"ఉదాహరణ: 120",
+
+diastolicPlaceholder:"ఉదాహరణ: 80",
+
+addReading:"➕ బీపీ రీడింగ్ జోడించండి",
+
+patientAge:"రోగి వయస్సు",
+
+years:"సంవత్సరాలు",
+
+totalReadings:"మొత్తం రీడింగులు",
+
+averageBP:"సగటు బీపీ",
+
+latestBP:"చివరి బీపీ",
+
+bpAnalysis:"📊 బీపీ విశ్లేషణ",
+
+noData:"బీపీ వివరాలు అందుబాటులో లేవు",
+
+systolicAverage:"సగటు సిస్టోలిక్",
+
+diastolicAverage:"సగటు డయాస్టోలిక్",
+
+bpHistory:"📅 బీపీ చరిత్ర",
+
+date:"తేదీ",
+
+action:"చర్య",
+
+bpStatus:"బీపీ స్థాయి",
+
+delete:"తొలగించు",
+
+foodGuidance:"🥗 ఆహార సూచనలు",
+
+foodIntro:"బీపీ స్థాయిని బట్టి ఆహార సూచనలు వేర్వేరుగా చూపించబడతాయి.",
+
+lowFoods:"🟠 తక్కువ బీపీకి ఆహారాలు",
+
+highFoods:"🟢 ఎక్కువ బీపీకి ఆహారాలు",
+
+
+lowFood1: "🥚 గుడ్లు",
+lowFood2: "🍗 చికెన్",
+lowFood3: "🧀 పనీర్",
+lowFood4: "🥜 గింజలు",
+lowFood5: "🫜 బీట్‌రూట్",
+lowFood6: "🥔 బంగాళాదుంప",
+lowFood7: "🍎 దానిమ్మ",
+lowFood8: "🥛 పాలు",
+
+highFood1: "🍊 నారింజ",
+highFood2: "🥣 ఓట్స్",
+highFood3: "🌰 బాదం పప్పు",
+highFood4: "🥬 పాలకూర",
+highFood5: "🍌 అరటిపండు",
+highFood6: "🍅 టమాటా",
+highFood7: "🥒 దోసకాయ",
+highFood8: "🥛 తక్కువ కొవ్వు పాలు",
+highFood9: "🐟 చేపలు",
+highFood10: "🧂 తక్కువ ఉప్పు ఉన్న ఆహారం",
+
+important:"⚠️ ముఖ్యమైన సూచన:",
+
+noticeText:"ఈ వెబ్‌సైట్ బీపీని నమోదు చేయడానికి మరియు ఆహారంపై అవగాహన కోసం మాత్రమే. ఇది స్వయంగా బీపీని కొలవదు. వైద్యుడు సూచించిన బీపీ మానిటర్ లేదా వైద్య సలహాకు బదులుగా ఉపయోగించకండి.",
+
+fillFields:"దయచేసి అన్ని వివరాలు నమోదు చేయండి.",
+
+validAge:"దయచేసి సరైన వయస్సు నమోదు చేయండి.",
+
+validSystolic:"దయచేసి సరైన సిస్టోలిక్ బీపీ నమోదు చేయండి.",
+
+validDiastolic:"దయచేసి సరైన డయాస్టోలిక్ బీపీ నమోదు చేయండి.",
+
+lowStatus:"🟠 తక్కువ బీపీ",
+
+highStatus:"🔴 సాధారణం కంటే ఎక్కువ బీపీ",
+
+normalStatus:"🟢 సాధారణ బీపీ",
+
+mmHg:" mmHg"
+
+},
+
+
+hi: {
+
+languageLabel:"भाषा:",
+
+tagline:"अपना रक्तचाप दर्ज करें और भोजन संबंधी सुझाव पाएँ",
+
+patientDetails:"👤 मरीज का विवरण",
+
+age:"उम्र",
+
+checkDate:"बीपी जाँच की तारीख",
+
+systolic:"सिस्टोलिक बीपी",
+
+diastolic:"डायस्टोलिक बीपी",
+
+agePlaceholder:"उदाहरण: 65",
+
+systolicPlaceholder:"उदाहरण: 120",
+
+diastolicPlaceholder:"उदाहरण: 80",
+
+addReading:"➕ बीपी रीडिंग जोड़ें",
+
+patientAge:"मरीज की उम्र",
+
+years:"वर्ष",
+
+totalReadings:"कुल रीडिंग",
+
+averageBP:"औसत बीपी",
+
+latestBP:"नवीनतम बीपी",
+
+bpAnalysis:"📊 बीपी विश्लेषण",
+
+noData:"बीपी का डेटा उपलब्ध नहीं है",
+
+systolicAverage:"औसत सिस्टोलिक",
+
+diastolicAverage:"औसत डायस्टोलिक",
+
+bpHistory:"📅 बीपी इतिहास",
+
+date:"तारीख",
+
+action:"कार्रवाई",
+
+bpStatus:"बीपी स्तर",
+
+delete:"हटाएँ",
+
+foodGuidance:"🥗 भोजन संबंधी सुझाव",
+
+foodIntro:"बीपी की श्रेणी के अनुसार भोजन के सुझाव अलग-अलग दिखाए जाते हैं।",
+
+lowFoods:"🟠 कम बीपी के लिए भोजन",
+
+highFoods:"🟢 उच्च बीपी के लिए भोजन",
+
+lowFood1: "🥚 अंडे",
+lowFood2: "🍗 चिकन",
+lowFood3: "🧀 पनीर",
+lowFood4: "🥜 मेवे",
+lowFood5: "🫜 चुकंदर",
+lowFood6: "🥔 आलू",
+lowFood7: "🍎 अनार",
+lowFood8: "🥛 दूध",
+
+highFood1: "🍊 संतरा",
+highFood2: "🥣 ओट्स",
+highFood3: "🌰 बादाम",
+highFood4: "🥬 पालक",
+highFood5: "🍌 केला",
+highFood6: "🍅 टमाटर",
+highFood7: "🥒 खीरा",
+highFood8: "🥛 कम वसा वाला दूध",
+highFood9: "🐟 मछली",
+highFood10: "🧂 कम नमक वाला भोजन",
+
+important:"⚠️ महत्वपूर्ण:",
+
+noticeText:"यह वेबसाइट बीपी दर्ज करने और भोजन संबंधी शैक्षिक जानकारी के लिए है। यह स्वयं रक्तचाप नहीं मापती और इसे प्रमाणित बीपी मॉनिटर या डॉक्टर की सलाह का विकल्प नहीं मानना चाहिए।",
+
+fillFields:"कृपया सभी विवरण भरें।",
+
+validAge:"कृपया सही उम्र दर्ज करें।",
+
+validSystolic:"कृपया सही सिस्टोलिक बीपी दर्ज करें।",
+
+validDiastolic:"कृपया सही डायस्टोलिक बीपी दर्ज करें।",
+
+lowStatus:"🟠 कम बीपी",
+
+highStatus:"🔴 सामान्य से अधिक बीपी",
+
+normalStatus:"🟢 सामान्य बीपी",
+
+mmHg:" mmHg"
+
+}
+
+};
+
+
+// TRANSLATION FUNCTION
+
+function t(key){
+
+    return translations[currentLanguage][key]
+    || translations.en[key]
+    || key;
+
+}
+
+
+// CHANGE LANGUAGE
+
+function changeLanguage(language){
+
+    currentLanguage = language;
+
+    document.documentElement.lang = language;
+
+    document.querySelectorAll("[data-i18n]").forEach(element=>{
+
+        const key = element.getAttribute("data-i18n");
+
+        element.textContent = t(key);
+
+    });
+
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(element=>{
+
+        const key = element.getAttribute("data-i18n-placeholder");
+
+        element.placeholder = t(key);
+
+    });
+
+    updateDashboard();
+
+}
+
+
+// ADD BP READING
 
 function addReading(){
 
-let age=document.getElementById("age").value;
-let date=document.getElementById("date").value;
-let s=parseInt(document.getElementById("sys").value);
-let d=parseInt(document.getElementById("dia").value);
+    const age = document.getElementById("age").value;
 
-if(!age||!date||!s||!d){
-alert("Please fill all fields.");
-return;
+    const date = document.getElementById("date").value;
+
+    const s = parseInt(document.getElementById("sys").value,10);
+
+    const d = parseInt(document.getElementById("dia").value,10);
+
+
+    if(!age || !date ||
+       !document.getElementById("sys").value ||
+       !document.getElementById("dia").value){
+
+        alert(t("fillFields"));
+
+        return;
+    }
+
+
+    if(age < 1 || age > 120){
+
+        alert(t("validAge"));
+
+        return;
+    }
+
+
+    if(s < 50 || s > 250){
+
+        alert(t("validSystolic"));
+
+        return;
+    }
+
+
+    if(d < 30 || d > 150){
+
+        alert(t("validDiastolic"));
+
+        return;
+    }
+
+
+    data.push({age,date,s,d});
+
+    updateDashboard();
+
+    document.getElementById("date").value = "";
+
+    document.getElementById("sys").value = "";
+
+    document.getElementById("dia").value = "";
+
 }
 
-if(age<1||age>120){
-alert("Please enter a valid age.");
-return;
+
+// BP STATUS CLASSIFICATION
+
+function getBPStatus(s,d){
+    if(s < 90 || d < 60){
+
+        return "low";
+
+    }
+
+    else if(s >= 120 || d >= 80){
+
+        return "high";
+
+    }
+
+    else{
+        if (s < 120 && d < 80 && s >= 90 && d >= 60) {
+    return "normal";
+
+        }
+      
+    }
 }
 
-if(s<50||s>250){
-alert("Please enter a valid systolic BP.");
-return;
-}
 
-if(d<30||d>150){
-alert("Please enter a valid diastolic BP.");
-return;
-}
-
-data.push({age,date,s,d});
-updateDashboard();
-
-document.getElementById("date").value="";
-document.getElementById("sys").value="";
-document.getElementById("dia").value="";
-}
+// UPDATE DASHBOARD AND HISTORY
 
 function updateDashboard(){
 
-if(data.length===0)return;
+    if(data.length === 0){
 
-let totalS=0,totalD=0,rows="";
+        document.getElementById("showAge").textContent = "-";
 
-data.forEach((r,index)=>{
+        document.getElementById("count").textContent = "0";
 
-totalS+=r.s;
-totalD+=r.d;
+        document.getElementById("avg").textContent = "-";
 
-rows+=`
-<tr>
-<td>${r.date}</td>
-<td>${r.s}</td>
-<td>${r.d}</td>
-<td><strong>${r.s}/${r.d}</strong></td>
-<td>
-<button class="delete-btn"
-onclick="deleteReading(${index})">
-Delete
-</button>
-</td>
-</tr>`;
-});
+        document.getElementById("latest").textContent = "-";
 
-let avgS=Math.round(totalS/data.length);
-let avgD=Math.round(totalD/data.length);
+        document.getElementById("avgSys").textContent = "-";
 
-document.getElementById("showAge").innerHTML=
-data[data.length-1].age+" years";
+        document.getElementById("avgDia").textContent = "-";
 
-document.getElementById("count").innerHTML=data.length;
+        document.getElementById("history").innerHTML = "";
 
-document.getElementById("avg").innerHTML=
-avgS+"/"+avgD;
 
-document.getElementById("avgSys").innerHTML=
-avgS+" mmHg";
+        const status = document.getElementById("status");
 
-document.getElementById("avgDia").innerHTML=
-avgD+" mmHg";
+        status.className = "status normal";
 
-document.getElementById("latest").innerHTML=
-data[data.length-1].s+"/"+data[data.length-1].d;
+        status.textContent = t("noData");
 
-document.getElementById("history").innerHTML=rows;
 
-updateStatus(avgS,avgD);
+        document.querySelector(".low-food").style.display = "block";
+
+        document.querySelector(".high-food").style.display = "block";
+
+        return;
+
+    }
+
+
+    let totalS = 0;
+
+    let totalD = 0;
+
+    let rows = "";
+
+
+    data.forEach((r,index)=>{
+
+        totalS += r.s;
+
+        totalD += r.d;
+
+
+        // GET INDIVIDUAL BP STATUS
+
+        const category = getBPStatus(r.s,r.d);
+
+        let statusText = t("normalStatus");
+
+
+        if(category === "low"){
+
+            statusText = t("lowStatus");
+
+        }
+
+        else if(category === "high"){
+
+            statusText = t("highStatus");
+
+        }
+
+
+        // DISPLAY STATUS IN BP HISTORY
+
+        rows += `
+
+        <tr>
+
+            <td>${r.date}</td>
+
+            <td>${r.s}</td>
+
+            <td>${r.d}</td>
+
+            <td>
+                <strong>${r.s}/${r.d}</strong>
+            </td>
+
+            <td>
+
+                <span class="bp-badge ${category}">
+                    ${statusText}
+                </span>
+
+            </td>
+
+            <td>
+
+                <button class="delete-btn"
+                onclick="deleteReading(${index})">
+
+                    ${t("delete")}
+
+                </button>
+
+            </td>
+
+        </tr>`;
+
+    });
+
+
+    const avgS = Math.round(totalS/data.length);
+
+    const avgD = Math.round(totalD/data.length);
+
+
+    document.getElementById("showAge").textContent =
+
+    data[data.length-1].age + " " + t("years");
+
+
+    document.getElementById("count").textContent = data.length;
+
+
+    document.getElementById("avg").textContent =
+
+    avgS + "/" + avgD;
+
+
+    document.getElementById("avgSys").textContent =
+
+    avgS + t("mmHg");
+
+
+    document.getElementById("avgDia").textContent =
+
+    avgD + t("mmHg");
+
+
+    document.getElementById("latest").textContent =
+
+    data[data.length-1].s + "/" + data[data.length-1].d;
+
+
+    document.getElementById("history").innerHTML = rows;
+
+
+    updateStatus(avgS,avgD);
+
 }
+
+
+// UPDATE OVERALL BP STATUS
 
 function updateStatus(s,d){
 
-let status=document.getElementById("status");
-document.querySelector(".low-food").style.display="none";
-document.querySelector(".high-food").style.display="none";
+    const status = document.getElementById("status");
 
-if(s<120||d<80){
-    status.className="status low";
-    status.innerHTML="🟠 LOW BP";
-     document.querySelector(".low-food").style.display="block";
+    const category = getBPStatus(s,d);
+
+
+    document.querySelector(".low-food").style.display = "none";
+
+    document.querySelector(".high-food").style.display = "none";
+
+
+    if(category === "low"){
+
+        status.className = "status low";
+
+        status.textContent = t("lowStatus");
+
+        document.querySelector(".low-food").style.display = "block";
+
+    }
+
+    else if(category === "high"){
+
+        status.className = "status high";
+
+        status.textContent = t("highStatus");
+
+        document.querySelector(".high-food").style.display = "block";
+
+    }
+
+    else{
+
+        status.className = "status normal";
+
+        status.textContent = t("normalStatus");
+
+    }
+
 }
 
-else if(s>120||d>80){
-    status.className="status high";
-    status.innerHTML="🔴 BP IS HIGH";
-    document.querySelector(".high-food").style.display="block";
-}
 
-else{
-    status.className="status normal";
-    status.innerHTML="🟢 NORMAL BP";
-}
-}
+// DELETE READING
 
 function deleteReading(index){
 
-data.splice(index,1);
+    data.splice(index,1);
 
-if(data.length===0){
-location.reload();
-}else{
-updateDashboard();
-}
+    updateDashboard();
 
 }
 
